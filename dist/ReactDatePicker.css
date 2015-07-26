@@ -1,0 +1,75 @@
+.datePicker {
+  position: relative;
+  box-sizing: border-box;
+}
+.datePicker *,
+.datePicker *:before,
+.datePicker *:after {
+  box-sizing: inherit;
+}
+.datePicker__input {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  height: 30px;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 15px;
+}
+.datePicker__calendar {
+  position: absolute;
+  border: 1px solid #2e2e2e;
+  border-radius: 3px;
+  background: #fff;
+  left: 0;
+  top: 30px;
+  padding: 5px;
+}
+.datePicker__calendar__header {
+  text-align: center;
+}
+.datePicker__year {
+  border: none;
+}
+.datePicker__month {
+  border: none;
+}
+.datePicker__day {
+  padding: 5px;
+  cursor: pointer;
+}
+.datePicker__day:hover {
+  outline: 1px solid #0b97c4;
+}
+.datePicker__day--today {
+  color: red;
+  font-weight: bold;
+}
+.datePicker__day--disabled:hover {
+  outline: none;
+  cursor: default;
+}
+.datePicker__prev {
+  width: 20px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==);
+}
+.datePicker__next {
+  width: 20px;
+  height: 30px;
+  display: inline-block;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=);
+}
+.datePicker__btn {
+  background-color: #45b7e8;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+.datePicker__btnGroup {
+  text-align: center;
+}
