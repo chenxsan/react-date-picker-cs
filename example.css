@@ -1,62 +1,106 @@
+/* 
+// Examples Stylesheet
+// -------------------
+*/
+body {
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: #08c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 720px;
+  padding: 1em;
+}
+.footer {
+  margin-top: 50px;
+  border-top: 1px solid #eee;
+  padding: 20px 0;
+  font-size: 12px;
+  color: #999;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #222;
+  font-weight: 100;
+  margin: 0.5em 0;
+}
+label {
+  color: #999;
+  display: inline-block;
+  font-size: 0.85em;
+  font-weight: bold;
+  margin: 1em 0;
+  text-transform: uppercase;
+}
+.hint {
+  margin: 15px 0;
+  font-style: italic;
+  color: #999;
+}
 .datePicker {
   position: relative;
   box-sizing: border-box;
 }
-
-.datePicker *, .datePicker *:before, .datePicker *:after {
+.datePicker *,
+.datePicker *:before,
+.datePicker *:after {
   box-sizing: inherit;
 }
-
 .datePicker__input {
-  border: 1px solid rgba(0, 0, 0, .12);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   height: 30px;
   padding: 2px 5px;
   border-radius: 3px;
   font-size: 15px;
 }
-
 .datePicker__calendar {
   position: absolute;
   border: 1px solid #2e2e2e;
   border-radius: 3px;
   background: #fff;
-  padding: 5px;
   left: 0;
   top: 30px;
   padding: 5px;
 }
-
 .datePicker__calendar__header {
   text-align: center;
 }
-
 .datePicker__year {
   border: none;
 }
-
 .datePicker__month {
   border: none;
 }
-
 .datePicker__day {
   padding: 5px;
   cursor: pointer;
 }
-
 .datePicker__day:hover {
   outline: 1px solid #0b97c4;
 }
-
 .datePicker__day--today {
   color: red;
   font-weight: bold;
 }
-
 .datePicker__day--disabled:hover {
   outline: none;
   cursor: default;
 }
-
 .datePicker__prev {
   width: 20px;
   height: 30px;
@@ -65,7 +109,6 @@
   cursor: pointer;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAUklEQVR42u3VMQoAIBADQf8Pgj+OD9hG2CtONJB2ymQkKe0HbwAP0xucDiQWARITIDEBEnMgMQ8S8+AqBIl6kKgHiXqQqAeJepBo/z38J/U0uAHlaBkBl9I4GwAAAABJRU5ErkJggg==);
 }
-
 .datePicker__next {
   width: 20px;
   height: 30px;
@@ -73,17 +116,14 @@
   vertical-align: middle;
   cursor: pointer;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAeCAYAAAAsEj5rAAAAU0lEQVR42u3VOwoAMAgE0dwfAnNjU26bYkBCFGwfiL9VVWoO+BJ4Gf3gtsEKKoFBNTCoCAYVwaAiGNQGMUHMkjGbgjk2mIONuXo0nC8XnCf1JXgArVIZAQh5TKYAAAAASUVORK5CYII=);
-
 }
-
 .datePicker__btn {
-  background-color: rgb(69, 183, 232);
-  border: 1px solid rgba(0, 0, 0, .12);
+  background-color: #45b7e8;
+  border: 1px solid rgba(0, 0, 0, 0.12);
   color: white;
   font-size: 16px;
   cursor: pointer;
 }
-
 .datePicker__btnGroup {
   text-align: center;
 }
