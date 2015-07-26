@@ -15,9 +15,6 @@ function log(date) {
 <ReactDatePicker onChange={log} />
 ```
 
-__COMPONENT DESCRIPTION GOES HERE__
-
-
 ## Demo & Examples
 
 Live demo: [chenxsan.github.io/react-date-picker-cs](http://chenxsan.github.io/react-date-picker-cs/)
@@ -45,7 +42,6 @@ npm install react-date-picker-cs --save
 
 ## Usage
 
-__EXPLAIN USAGE HERE__
 
 ```
 var ReactDatePicker = require('react-date-picker-cs');
@@ -55,12 +51,12 @@ var ReactDatePicker = require('react-date-picker-cs');
 
 ### Properties
 
-* __DOCUMENT PROPERTIES HERE__
+* range {Array} 定义年份的范围
+* onChange {Function} 日期变化的回调函数，函数参数为用户所选的日期
 
 ### Notes
 
-__ADDITIONAL USAGE NOTES__
-
+目前仅在 Mac 平台下的 Firefox、Chrome 与 Safari 里测试过。
 
 ## Development (`src`, `lib` and the build process)
 
@@ -70,7 +66,5 @@ To build, watch and serve the examples (which will also watch the component sour
 
 ## License
 
-__PUT LICENSE HERE__
-
-Copyright (c) 2015 Sam Chen.
+MIT. Copyright (c) 2015 Sam Chen.
 
