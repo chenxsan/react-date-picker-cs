@@ -15,54 +15,47 @@ function log(date) {
 <ReactDatePicker onChange={log} />
 ```
 
-## Demo & Examples
+## Demo
 
-Live demo: [chenxsan.github.io/react-date-picker-cs](http://chenxsan.github.io/react-date-picker-cs/)
+Demo 请点击： [chenxsan.github.io/react-date-picker-cs](http://chenxsan.github.io/react-date-picker-cs/)
 
-To build the examples locally, run:
+## 安装
 
-```
-npm install
-npm start
-```
-
-Then open [`localhost:8000`](http://localhost:8000) in a browser.
-
-
-## Installation
-
-The easiest way to use react-date-picker-cs is to install it from NPM and include it in your own React build process (using [Browserify](http://browserify.org), [Webpack](http://webpack.github.io/), etc).
-
-You can also use the standalone build by including `dist/react-date-picker-cs.js` in your page. If you use this, make sure you have already included React, and it is available as a global variable.
+最简单的办法是从 NPM 上安装，
 
 ```
 npm install react-date-picker-cs --save
 ```
 
+然后在 Browserify、Webpack、jspm 等构建工具中使用。
 
-## Usage
+当然，也可以直接在页面中引用 `dist/react-date-picker-cs.js` 及 `dist/ReactDatePicker.css`。
 
+## 用法
+
+下面用 jspm 中的用法做个说明：
 
 ```
-var ReactDatePicker = require('react-date-picker-cs');
+import ReactDatePicker from 'react-date-picker-cs';
+import 'react-date-picker-cs/dist/ReactDatePicker.css!';
 
-<ReactDatePicker>Example</ReactDatePicker>
+<ReactDatePicker range={[1990, 2010]} onChange={...}/>
 ```
 
-### Properties
+### 属性
 
 * range {Array} 定义年份的范围
 * onChange {Function} 日期变化的回调函数，函数参数为用户所选的日期
 
-### Notes
+### 兼容情况
 
-目前仅在 Mac 平台下的 Firefox、Chrome 与 Safari 里测试过。
+目前仅在 Mac 平台下最新版的 Firefox、Chrome 与 Safari 里测试过。
 
-## Development (`src`, `lib` and the build process)
+## 定制
 
-**NOTE:** The source code for the component is in `src`. A transpiled CommonJS version (generated with Babel) is available in `lib` for use with node.js, browserify and webpack. A UMD bundle is also built to `dist`, which can be included without the need for any build system.
+如果你想在此基础上自定义或改造功能，组件的源代码在 `src` 目录下。
 
-To build, watch and serve the examples (which will also watch the component source), run `npm start`. If you just want to watch changes to `src` and rebuild `lib`, run `npm run watch` (this is useful if you are working with `npm link`).
+更多开发流程参见 [JedWatson/generator-react-component](https://github.com/JedWatson/generator-react-component)。
 
 ## License
 
