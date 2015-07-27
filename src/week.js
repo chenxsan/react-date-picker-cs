@@ -5,6 +5,13 @@
 import React from 'react';
 
 export default React.createClass({
+	propTypes: {
+		days: React.PropTypes.array,
+		highlight: React.PropTypes.bool,
+		range: React.PropTypes.arrayOf(React.PropTypes.number),
+		selectDay: React.PropTypes.func.isRequired,
+		year: React.PropTypes.number
+	},
     handleClick: function(e) {
         this.props.selectDay(e.target.textContent);
     },
@@ -13,7 +20,7 @@ export default React.createClass({
             if (day) {
 
                 // 仅高亮今天
-                if (day == this.props.day && this.props.highlight) {
+                if (day === this.props.day && this.props.highlight) {
                     return <td key={index} className={`datePicker__day--today datePicker__day`} onClick={this.handleClick}>{day}</td>;
                 } else {
                     return <td key={index} className="datePicker__day" onClick={this.handleClick}>{day}</td>;

@@ -21,7 +21,7 @@ export default React.createClass({
 	returnToday: function () {
 		var today = new Date();
 		var year = `${today.getFullYear()}`;
-		var month = `${today.getMonth() + 1}`;
+		var month = `${today.getMonth() + 1}`; // 0 基，但是显示时不可能也 0 基
 		var day = `${today.getDate()}`;
 		month = padLeft(month, 2, '0');
 		day = padLeft(day, 2, '0');

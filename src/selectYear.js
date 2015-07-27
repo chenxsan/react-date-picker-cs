@@ -4,9 +4,14 @@
 import React from 'react';
 
 export default React.createClass({
+	propTypes: {
+		range: React.PropTypes.arrayOf(React.PropTypes.number),
+		selectYear: React.PropTypes.func.isRequired,
+		year: React.PropTypes.number
+	},
     getDefaultProps: function() {
       return {
-          year: 2015
+          year: new Date().getFullYear()
       };
     },
     handleChange: function(e) {

@@ -4,9 +4,14 @@
 import React from 'react';
 
 export default React.createClass({
+	propTypes: {
+		month: React.PropTypes.number,
+		range: React.PropTypes.arrayOf(React.PropTypes.string),
+		selectMonth: React.PropTypes.func.isRequired
+	},
     getDefaultProps: function() {
         return {
-            range: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
+            range: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
         };
     },
     handleChange: function(e) {
@@ -14,7 +19,7 @@ export default React.createClass({
     },
     render: function() {
         var options = this.props.range.map(function(option, index) {
-            return <option key={index} value={index}>{`${option}月`}</option>;
+            return <option key={index} value={index + 1}>{`${option}`}</option>;
         });
         return (
             <select value={this.props.month} className="datePicker__month" onChange={this.handleChange}>
