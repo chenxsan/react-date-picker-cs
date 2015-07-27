@@ -88,6 +88,7 @@ label {
 }
 .datePicker__day {
   padding: 5px;
+  text-align: right;
   cursor: pointer;
 }
 .datePicker__day:hover {
