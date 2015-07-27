@@ -11,6 +11,7 @@ import WeekDays from './weekDays';
 export default React.createClass({
 	propTypes: {
 		date: React.PropTypes.string,
+		locale: React.PropTypes.string,
 		onClickCalendar: React.PropTypes.func.isRequired,
 		range: React.PropTypes.arrayOf(React.PropTypes.number),
 		selectToday: React.PropTypes.func.isRequired
@@ -77,11 +78,11 @@ export default React.createClass({
             <div className="datePicker__calendar__header">
                 <span onClick={this.prevMonth} className="datePicker__prev"></span>
                 <SelectYear year={this.state.year} selectYear={this.selectYear} range={this.props.range}/>
-                <SelectMonth month={this.state.month} selectMonth={this.selectMonth}/>
+                <SelectMonth month={this.state.month} selectMonth={this.selectMonth} locale={this.props.locale}/>
                 <span onClick={this.nextMonth} className="datePicker__next"></span>
             </div>
-            <WeekDays highlight={new Date(this.props.date).getFullYear() === this.state.year && new Date(this.props.date).getMonth() + 1 === this.state.month} year={this.state.year} month={this.state.month} day={this.state.day} selectDay={this.selectDay}/>
-            <div className="datePicker__btnGroup"><button className="datePicker__btn datePicker__btn--today" onClick={this.props.selectToday}>今天</button></div>
+            <WeekDays locale={this.props.locale} highlight={new Date(this.props.date).getFullYear() === this.state.year && new Date(this.props.date).getMonth() + 1 === this.state.month} year={this.state.year} month={this.state.month} day={this.state.day} selectDay={this.selectDay}/>
+            <div className="datePicker__btnGroup"><button className="datePicker__btn datePicker__btn--today" onClick={this.props.selectToday}>{this.props.locale === 'zh' ? '今天' : 'Today'}</button></div>
         </div>);
     }
 

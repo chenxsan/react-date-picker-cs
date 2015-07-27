@@ -5,8 +5,8 @@ import React from 'react';
 
 export default React.createClass({
 	propTypes: {
+		locale: React.PropTypes.string,
 		month: React.PropTypes.number,
-		range: React.PropTypes.arrayOf(React.PropTypes.string),
 		selectMonth: React.PropTypes.func.isRequired
 	},
     getDefaultProps: function() {
@@ -18,8 +18,14 @@ export default React.createClass({
       this.props.selectMonth(e.currentTarget.value);
     },
     render: function() {
-        var options = this.props.range.map(function(option, index) {
-            return <option key={index} value={index + 1}>{`${option}`}</option>;
+		var months;
+		if (this.props.locale === 'zh') {
+			months = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+		} else {
+			months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+		}
+        var options = months.map(function(month, index) {
+            return <option key={index} value={index + 1}>{`${month}`}</option>;
         });
         return (
             <select value={this.props.month} className="datePicker__month" onChange={this.handleChange}>

@@ -9,11 +9,13 @@ export default React.createClass({
 	getDefaultProps: function () {
 		return {
 			range: [2010, 2020],
+			locale: 'zh',
 			onChange: function () {
 			}
 		};
 	},
 	propTypes: {
+		locale: React.PropTypes.string,
 		onChange: React.PropTypes.func.isRequired,
 		range: React.PropTypes.arrayOf(React.PropTypes.number),
 		selectedDate: React.PropTypes.string
@@ -50,11 +52,13 @@ export default React.createClass({
 		this.setState({
 			selectedDate: today,
 			isCalendarShow: false
+		}, function() {
+			this.props.onChange(today);
 		});
 	},
 	calender: function () {
 		return (
-			<Calendar onClickCalendar={this.onClickCalendar} date={this.state.selectedDate} selectToday={this.selectToday} range={this.props.range}/>
+			<Calendar onClickCalendar={this.onClickCalendar} date={this.state.selectedDate} selectToday={this.selectToday} range={this.props.range} locale={this.props.locale}/>
 		);
 	},
 	focusIn: function () {
