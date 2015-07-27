@@ -6,42 +6,41 @@ import Calendar from './calendar';
 import padLeft from 'lodash/string/padLeft';
 
 export default React.createClass({
-	getDefaultProps: function() {
+	getDefaultProps: function () {
 		return {
-			range: [2010, 2020]
+			range: [2010, 2020],
+			onChange: function () {
+			}
 		};
+	},
+	propTypes: {
+		onChange: React.PropTypes.func.isRequired,
+		range: React.PropTypes.arrayOf(React.PropTypes.number),
+		selectedDate: React.PropTypes.string
 	},
 	returnToday: function () {
 		var today = new Date();
 		var year = `${today.getFullYear()}`;
 		var month = `${today.getMonth() + 1}`;
 		var day = `${today.getDate()}`;
-
-		if (month.length < 2) {
-			month = `0${month}`;
-		}
-		month = padLeft(month, '0', 2);
-
-		day = padLeft(day, '0', 2);
-
+		month = padLeft(month, 2, '0');
+		day = padLeft(day, 2, '0');
 		today = `${year}-${month}-${day}`;
 		return today;
 	},
 	getInitialState: function () {
-
-
 		var today = this.returnToday();
 		return {
-			today: today,
+			selectedDate: this.props.selectedDate || today,
 			isCalendarShow: false
 		};
 
 	},
 	onClickCalendar: function (date) {
 		this.setState({
-			today: date,
+			selectedDate: date,
 			isCalendarShow: false
-		}, function() {
+		}, function () {
 			this.props.onChange(date);
 		});
 	},
@@ -49,13 +48,13 @@ export default React.createClass({
 		var today = this.returnToday();
 
 		this.setState({
-			today: today,
+			selectedDate: today,
 			isCalendarShow: false
 		});
 	},
 	calender: function () {
 		return (
-			<Calendar onClickCalendar={this.onClickCalendar} date={this.state.today} selectToday={this.selectToday} range={this.props.range}/>
+			<Calendar onClickCalendar={this.onClickCalendar} date={this.state.selectedDate} selectToday={this.selectToday} range={this.props.range}/>
 		);
 	},
 	focusIn: function () {
@@ -66,8 +65,7 @@ export default React.createClass({
 	render: function () {
 		return (
 			<div className="datePicker">
-				<input className="datePicker__input" type='text' onFocus={this.focusIn}
-					   value={this.state.today} readOnly/>
+				<input className="datePicker__input" type='text' onFocus={this.focusIn} value={this.state.selectedDate} readOnly/>
 				{this.state.isCalendarShow === false ? null : this.calender()}
 			</div>
 		);
