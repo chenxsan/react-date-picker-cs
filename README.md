@@ -33,19 +33,20 @@ npm install react-date-picker-cs --save
 
 ## 用法
 
-下面用 jspm 中的用法做个说明：
+下面就 jspm 中的用法做个说明：
 
 ```
 import ReactDatePicker from 'react-date-picker-cs';
 import 'react-date-picker-cs/dist/ReactDatePicker.css!';
 
-<ReactDatePicker range={[1990, 2010]} onChange={...}/>
+<ReactDatePicker range={[1990, 2010]} onChange={...} locale='en'/>
 ```
 
 ### 属性
 
 * range {Array} 定义年份的范围
 * onChange {Function} 日期变化的回调函数，函数参数为用户所选的日期
+* locale {String} 默认为 `zh`，但也可以传入 `en`
 
 ### 兼容情况
 
