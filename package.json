@@ -1,6 +1,6 @@
 {
   "name": "react-date-picker-cs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "React DatePicker",
   "main": "lib/ReactDatePicker.js",
   "author": "Sam Chen",
@@ -13,7 +13,6 @@
     "url": "https://github.com/chenxsan/react-date-picker-cs/issues"
   },
   "dependencies": {
-    "classnames": "^2.1.2",
     "lodash": "^3.10.0",
     "react": "^0.13.3"
   },
