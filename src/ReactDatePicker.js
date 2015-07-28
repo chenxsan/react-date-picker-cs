@@ -18,7 +18,7 @@ export default React.createClass({
 		locale: React.PropTypes.string,
 		onChange: React.PropTypes.func.isRequired,
 		range: React.PropTypes.arrayOf(React.PropTypes.number),
-		selectedDate: React.PropTypes.string
+		value: React.PropTypes.string
 	},
 	returnToday: function () {
 		var today = new Date();
@@ -33,7 +33,7 @@ export default React.createClass({
 	getInitialState: function () {
 		var today = this.returnToday();
 		return {
-			selectedDate: this.props.selectedDate || today,
+			selectedDate: this.props.value || today,
 			isCalendarShow: false
 		};
 
