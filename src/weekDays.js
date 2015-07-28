@@ -22,7 +22,7 @@ export default React.createClass({
 	render: function () {
 
 		// 计算某年某月总共的天数
-		var days = new Date(this.props.year, this.props.month - 1, 0).getDate(); // month 是 0 基，所以又得减一
+		var days = new Date(this.props.year, this.props.month, 0).getDate(); // fixme month 是 0 基
 
 		// 该月第一天是周几，0 是周天，1 是周一
 		var firstDay = new Date(this.props.year, this.props.month - 1, 1).getDay();
