@@ -809,7 +809,7 @@ exports['default'] = _react2['default'].createClass({
 	render: function render() {
 
 		// 计算某年某月总共的天数
-		var days = new Date(this.props.year, this.props.month, 0).getDate(); // fixme month 是 0 基
+		var days = new Date(this.props.year, this.props.month, 0).getDate(); // 8 月 0 号即 7 月最后一天
 
 		// 该月第一天是周几，0 是周天，1 是周一
 		var firstDay = new Date(this.props.year, this.props.month - 1, 1).getDay();
@@ -907,7 +907,7 @@ exports['default'] = _react2['default'].createClass({
 		locale: _react2['default'].PropTypes.string,
 		onChange: _react2['default'].PropTypes.func.isRequired,
 		range: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number),
-		selectedDate: _react2['default'].PropTypes.string
+		value: _react2['default'].PropTypes.string
 	},
 	returnToday: function returnToday() {
 		var today = new Date();
@@ -922,7 +922,7 @@ exports['default'] = _react2['default'].createClass({
 	getInitialState: function getInitialState() {
 		var today = this.returnToday();
 		return {
-			selectedDate: this.props.selectedDate || today,
+			selectedDate: this.props.value || today,
 			isCalendarShow: false
 		};
 	},

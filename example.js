@@ -7,12 +7,21 @@ var ReactDatePicker = require('react-date-picker-cs');
 var App = React.createClass({
 	displayName: 'App',
 
-	log: function log(date) {},
+	getInitialState: function getInitialState() {
+		return {
+			selectedDate: '2015-07-20'
+		};
+	},
+	log: function log(date) {
+		this.setState({
+			selectedDate: date
+		});
+	},
 	render: function render() {
 		return React.createElement(
 			'div',
 			null,
-			React.createElement(ReactDatePicker, { onChange: this.log, range: [2013, 2020] })
+			React.createElement(ReactDatePicker, { onChange: this.log, range: [2013, 2020], value: this.state.selectedDate })
 		);
 	}
 });
