@@ -1,19 +1,6 @@
 # React DatePicker
 
-又一个 React 日期选择组件。可以定义年份的范围，比如：
-
-```
-<ReactDatePicker range={[1990, 2010]} />
-```
-
-日期本身可以通过 `onChange` 事件取得：
-
-```
-function log(date) {
-  console.log(date);
-}
-<ReactDatePicker onChange={log} />
-```
+React 日期组件。
 
 ## Demo
 
@@ -27,28 +14,54 @@ Demo 请点击： [chenxsan.github.io/react-date-picker-cs](http://chenxsan.gith
 npm install react-date-picker-cs --save
 ```
 
-然后在 Browserify、Webpack、jspm 等构建工具中使用。
+如果你使用 [jspm](https://github.com/jspm/jspm-cli)：
 
-当然，也可以直接在页面中引用 `dist/react-date-picker-cs.js` 及 `dist/ReactDatePicker.css`。
+```
+jspm install npm:react-date-picker-cs
+```
+
+当然，你也可以直接在页面中引用 `dist/react-date-picker-cs.js` 及 `dist/ReactDatePicker.css`。
 
 ## 用法
 
-下面就 jspm 中的用法做个说明：
-
 ```
-import ReactDatePicker from 'react-date-picker-cs';
-import 'react-date-picker-cs/dist/ReactDatePicker.css!';
+var React = require('react');
+var ReactDatePicker = require('react-date-picker-cs');
 
-<ReactDatePicker range={[1990, 2010]} onChange={...} locale='en'/>
+var App = React.createClass({
+	getInitialState: function() {
+		return {
+			selectedDate: '2015-07-20'
+		};
+	},
+	log: function(date) {
+		this.setState({
+			selectedDate: date
+		});
+	},
+	render () {
+		return (
+			<div>
+				<ReactDatePicker onChange={this.log} range={[2013, 2020]} value={this.state.selectedDate}/>
+			</div>
+		);
+	}
+});
+
+React.render(<App />, document.getElementById('app'));
 ```
 
-### 属性
+### 组件属性
 
 * range {Array} 定义年份的范围
 * onChange {Function} 日期变化的回调函数，函数参数为用户所选的日期
 * locale {String} 默认为 `zh`，但也可以传入 `en`
 
-### 兼容情况
+### 修改样式
+
+样式定义在 `ReactDatePicker.less` 文件中，采用 BEM 命名规范。
+
+### 浏览器兼容情况
 
 目前仅在 Mac 平台下最新版的 Firefox、Chrome 与 Safari 里测试过。
 
@@ -56,7 +69,7 @@ import 'react-date-picker-cs/dist/ReactDatePicker.css!';
 
 如果你想在此基础上自定义或改造功能，组件的源代码在 `src` 目录下。
 
-更多开发流程参见 [JedWatson/generator-react-component](https://github.com/JedWatson/generator-react-component)。
+更多开发流程参见 [JedWatson/generator-react-component](https://github.com/JedWatson/generator-react-component)，因为本组件是基于它的样板开发的。
 
 ## License
 
