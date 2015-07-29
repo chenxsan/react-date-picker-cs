@@ -8,6 +8,7 @@ import padLeft from 'lodash/string/padLeft';
 export default React.createClass({
 	getDefaultProps: function () {
 		return {
+			disabled: false,
 			range: [2010, 2020],
 			locale: 'zh',
 			onChange: function () {
@@ -15,6 +16,7 @@ export default React.createClass({
 		};
 	},
 	propTypes: {
+		disabled: React.PropTypes.bool,
 		locale: React.PropTypes.string,
 		onChange: React.PropTypes.func.isRequired,
 		range: React.PropTypes.arrayOf(React.PropTypes.number),
@@ -62,6 +64,9 @@ export default React.createClass({
 		);
 	},
 	focusIn: function () {
+		if (this.props.disabled === true) {
+			return;
+		}
 		this.setState({
 			isCalendarShow: true
 		});
@@ -69,7 +74,7 @@ export default React.createClass({
 	render: function () {
 		return (
 			<div className="datePicker">
-				<input className="datePicker__input" type='text' onFocus={this.focusIn} value={this.state.selectedDate} readOnly/>
+				<input className={`datePicker__input ${this.props.disabled === true ? 'datePicker__input--disabled' : ''}`} type='text' onFocus={this.focusIn} value={this.state.selectedDate} readOnly disabled={this.props.disabled}/>
 				{this.state.isCalendarShow === false ? null : this.calender()}
 			</div>
 		);

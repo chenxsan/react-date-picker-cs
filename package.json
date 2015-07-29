@@ -1,6 +1,6 @@
 {
   "name": "react-date-picker-cs",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "React DatePicker",
   "main": "lib/ReactDatePicker.js",
   "author": "Sam Chen",
@@ -17,11 +17,13 @@
     "react": "^0.13.3"
   },
   "devDependencies": {
+    "babel": "^5.8.12",
     "babel-eslint": "^3.1.14",
     "eslint": "^0.22.1",
     "eslint-plugin-react": "^2.5.0",
-    "react-component-gulp-tasks": "^0.7.0",
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "jsdom": "^3.1.2",
+    "react-component-gulp-tasks": "^0.7.0"
   },
   "browserify-shim": {
     "react": "global:React"
@@ -33,7 +35,7 @@
     "publish:site": "gulp publish:examples",
     "release": "gulp release",
     "start": "gulp dev",
-    "test": "echo \"no tests yet\" && exit 0",
+    "test": "mocha --compilers js:babel/register",
     "watch": "gulp watch:lib"
   },
   "keywords": [

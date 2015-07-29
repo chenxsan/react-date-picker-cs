@@ -42,7 +42,7 @@ var App = React.createClass({
 	render () {
 		return (
 			<div>
-				<ReactDatePicker onChange={this.log} range={[2013, 2020]} value={this.state.selectedDate}/>
+				<ReactDatePicker onChange={this.log} range={[2013, 2020]} value={this.state.selectedDate} disabled={true}/>
 			</div>
 		);
 	}
@@ -56,6 +56,7 @@ React.render(<App />, document.getElementById('app'));
 * range {Array} 定义年份的范围
 * onChange {Function} 日期变化的回调函数，函数参数为用户所选的日期
 * locale {String} 默认为 `zh`，但也可以传入 `en`
+* disabled {Boolean} 默认为 false，可以传入 true，禁止选择日期
 
 ### 修改样式
 
