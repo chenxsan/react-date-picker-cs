@@ -898,12 +898,14 @@ exports['default'] = _react2['default'].createClass({
 
 	getDefaultProps: function getDefaultProps() {
 		return {
+			disabled: false,
 			range: [2010, 2020],
 			locale: 'zh',
 			onChange: function onChange() {}
 		};
 	},
 	propTypes: {
+		disabled: _react2['default'].PropTypes.bool,
 		locale: _react2['default'].PropTypes.string,
 		onChange: _react2['default'].PropTypes.func.isRequired,
 		range: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number),
@@ -948,6 +950,9 @@ exports['default'] = _react2['default'].createClass({
 		return _react2['default'].createElement(_calendar2['default'], { onClickCalendar: this.onClickCalendar, date: this.state.selectedDate, selectToday: this.selectToday, range: this.props.range, locale: this.props.locale });
 	},
 	focusIn: function focusIn() {
+		if (this.props.disabled === true) {
+			return;
+		}
 		this.setState({
 			isCalendarShow: true
 		});
@@ -956,7 +961,7 @@ exports['default'] = _react2['default'].createClass({
 		return _react2['default'].createElement(
 			'div',
 			{ className: "datePicker" },
-			_react2['default'].createElement('input', { className: "datePicker__input", type: 'text', onFocus: this.focusIn, value: this.state.selectedDate, readOnly: true }),
+			_react2['default'].createElement('input', { className: 'datePicker__input ' + (this.props.disabled === true ? 'datePicker__input--disabled' : ''), type: 'text', onFocus: this.focusIn, value: this.state.selectedDate, readOnly: true, disabled: this.props.disabled }),
 			this.state.isCalendarShow === false ? null : this.calender()
 		);
 	}
