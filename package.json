@@ -1,6 +1,6 @@
 {
   "name": "react-date-picker-cs",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "React DatePicker",
   "main": "lib/ReactDatePicker.js",
   "author": "Sam Chen",
@@ -19,6 +19,7 @@
   "devDependencies": {
     "babel": "^5.8.12",
     "babel-eslint": "^3.1.14",
+    "chai": "^3.2.0",
     "eslint": "^0.22.1",
     "eslint-plugin-react": "^2.5.0",
     "gulp": "^3.9.0",
@@ -41,5 +42,6 @@
   "keywords": [
     "react",
     "react-component"
-  ]
+  ],
+  "license": "MIT"
 }
