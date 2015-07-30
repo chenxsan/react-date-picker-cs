@@ -72,6 +72,14 @@ React.render(<App />, document.getElementById('app'));
 
 更多开发流程参见 [JedWatson/generator-react-component](https://github.com/JedWatson/generator-react-component)，因为本组件是基于它的样板开发的。
 
+## 测试
+
+测试代码在 `test` 目录下，在项目文件夹下执行：
+
+```
+npm test
+```
+
 ## License
 
 MIT. Copyright (c) 2015 Sam Chen.
