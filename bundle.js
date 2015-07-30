@@ -721,11 +721,10 @@ exports["default"] = _react2["default"].createClass({
     displayName: "week",
 
     propTypes: {
-        days: _react2["default"].PropTypes.array,
-        highlight: _react2["default"].PropTypes.bool,
-        range: _react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.number),
-        selectDay: _react2["default"].PropTypes.func.isRequired,
-        year: _react2["default"].PropTypes.number
+        day: _react2["default"].PropTypes.number, // input 中的 day 值，
+        days: _react2["default"].PropTypes.array, // 要渲染的数组，正常长度为 7
+        highlight: _react2["default"].PropTypes.bool, // 表示要高亮特定的 yyyy-mm-dd 日期
+        selectDay: _react2["default"].PropTypes.func.isRequired
     },
     handleClick: function handleClick(e) {
         this.props.selectDay(e.target.textContent);
@@ -824,8 +823,13 @@ exports['default'] = _react2['default'].createClass({
 
 		var weekDays = [];
 		for (var j = 0, len = chunks.length; j < len; j++) {
-			weekDays.push(_react2['default'].createElement(_week2['default'], { key: j, highlight: this.props.highlight, year: this.props.year, month: this.props.month,
-				days: chunks[j], selectDay: this.selectDay, day: this.props.day }));
+			// 如果 chunks[j] 长度不足 7，则补充到 7
+			if (chunks[j].length < 7) {
+				for (var m = chunks[j].length, n = 7; m < n; m++) {
+					chunks[j].push(undefined);
+				}
+			}
+			weekDays.push(_react2['default'].createElement(_week2['default'], { key: j, highlight: this.props.highlight, days: chunks[j], selectDay: this.selectDay, day: this.props.day }));
 		}
 		var weekTitle;
 		if (this.props.locale === 'zh') {
