@@ -36,9 +36,14 @@ export default React.createClass({
 		var chunks = _chunk(range, 7); // 分割成长度为 7 的数组段
 
 		var weekDays = [];
-		for (var j = 0, len = chunks.length; j < len; j++) {
-			weekDays.push(<Week key={j} highlight={this.props.highlight} year={this.props.year} month={this.props.month}
-								days={chunks[j]} selectDay={this.selectDay} day={this.props.day}/>);
+		for (let j = 0, len = chunks.length; j < len; j++) {
+			// 如果 chunks[j] 长度不足 7，则补充到 7
+			if (chunks[j].length < 7) {
+				for (let m = chunks[j].length, n = 7; m < n; m++) {
+					chunks[j].push(undefined);
+				}
+			}
+			weekDays.push(<Week key={j} highlight={this.props.highlight} days={chunks[j]} selectDay={this.selectDay} day={this.props.day}/>);
 		}
 		var weekTitle;
 		if (this.props.locale === 'zh') {

@@ -6,11 +6,10 @@ import React from 'react';
 
 export default React.createClass({
 	propTypes: {
-		days: React.PropTypes.array,
-		highlight: React.PropTypes.bool,
-		range: React.PropTypes.arrayOf(React.PropTypes.number),
-		selectDay: React.PropTypes.func.isRequired,
-		year: React.PropTypes.number
+		day: React.PropTypes.number, // input 中的 day 值，
+		days: React.PropTypes.array, // 要渲染的数组，正常长度为 7
+		highlight: React.PropTypes.bool, // 表示要高亮特定的 yyyy-mm-dd 日期
+		selectDay: React.PropTypes.func.isRequired
 	},
     handleClick: function(e) {
         this.props.selectDay(e.target.textContent);
