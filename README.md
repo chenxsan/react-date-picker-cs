@@ -4,25 +4,25 @@ React 日期组件。
 
 ## Demo
 
-Demo 请点击： [chenxsan.github.io/react-date-picker-cs](http://chenxsan.github.io/react-date-picker-cs/)
+Demo：[chenxsan.github.io/react-date-picker-cs](http://chenxsan.github.io/react-date-picker-cs/)
 
-## 安装
+## Install
 
-最简单的办法是从 NPM 上安装，
+You can install it from npm:
 
 ```
 npm install react-date-picker-cs --save
 ```
 
-如果你使用 [jspm](https://github.com/jspm/jspm-cli)：
+If you use [jspm](https://github.com/jspm/jspm-cli), then:
 
 ```
 jspm install npm:react-date-picker-cs
 ```
 
-当然，你也可以直接在页面中引用 `dist/react-date-picker-cs.js` 及 `dist/ReactDatePicker.css`。
+You can also link to `dist/react-date-picker-cs.js` and `dist/ReactDatePicker.css` in your HTML directly。
 
-## 用法
+## Usage
 
 ```
 var React = require('react');
@@ -51,30 +51,30 @@ var App = React.createClass({
 React.render(<App />, document.getElementById('app'));
 ```
 
-### 组件属性
+### Properties
 
-* range {Array} 定义年份的范围
-* onChange {Function} 日期变化的回调函数，函数参数为用户所选的日期
-* locale {String} 默认为 `zh`，但也可以传入 `en`
-* disabled {Boolean} 默认为 false，可以传入 true，禁止选择日期
+* range {Array} - You can customize the range of year
+* onChange {Function} - When user change the date
+* locale {String} - Default to `en`, you can also use `zh`
+* disabled {Boolean} - Default to `false`, you can pass in `true` to disable component
 
-### 修改样式
+### Modify styles
 
-样式定义在 `ReactDatePicker.less` 文件中，采用 BEM 命名规范。
+The styles are defined in `ReactDatePicker.less`, make use of [BEM naming convention](https://en.bem.info/method/definitions/)。
 
-### 浏览器兼容情况
+### Browser support
 
-目前仅在 Mac 平台下最新版的 Firefox、Chrome 与 Safari 里测试过。
+I had only test it with the latest Firefox、Chrome and Safari on Mac OSX.
 
-## 定制
+## Customization
 
-如果你想在此基础上自定义或改造功能，组件的源代码在 `src` 目录下。
+The source code is in `src` folder, so you can customize it as you like.
 
-更多开发流程参见 [JedWatson/generator-react-component](https://github.com/JedWatson/generator-react-component)，因为本组件是基于它的样板开发的。
+Anything related to developing this component, please check [JedWatson/generator-react-component](https://github.com/JedWatson/generator-react-component). 
 
-## 测试
+## Test
 
-测试代码在 `test` 目录下，在项目文件夹下执行：
+Test code is in `test` folder, you can run:
 
 ```
 npm test

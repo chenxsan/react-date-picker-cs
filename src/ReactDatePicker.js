@@ -10,7 +10,7 @@ export default React.createClass({
 		return {
 			disabled: false,
 			range: [2010, 2020],
-			locale: 'zh',
+			locale: 'en',
 			onChange: function () {
 			}
 		};

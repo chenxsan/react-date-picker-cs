@@ -51,7 +51,7 @@ export default React.createClass({
 				return (<th key={v}>{v}</th>);
 			});
 		} else {
-			weekTitle = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(function (v) {
+			weekTitle = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(function (v) {
 				return (<th key={v}>{v}</th>);
 			});
 		}
