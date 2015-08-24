@@ -944,11 +944,9 @@ exports['default'] = _react2['default'].createClass({
 		var today = this.returnToday();
 
 		this.setState({
-			selectedDate: today,
 			isCalendarShow: false
-		}, function () {
-			this.props.onChange(today);
 		});
+		this.props.onChange(today);
 	},
 	calender: function calender() {
 		return _react2['default'].createElement(_calendar2['default'], { onClickCalendar: this.onClickCalendar, date: this.state.selectedDate, selectToday: this.selectToday, range: this.props.range, locale: this.props.locale });
