@@ -7,12 +7,20 @@ import padLeft from 'lodash/string/padLeft';
 
 export default React.createClass({
 	getDefaultProps: function () {
+		var today = new Date();
+		var year = `${today.getFullYear()}`;
+		var month = `${today.getMonth() + 1}`; // 0 基，但是显示时不可能也 0 基
+		var day = `${today.getDate()}`;
+		month = padLeft(month, 2, '0');
+		day = padLeft(day, 2, '0');
+		today = `${year}-${month}-${day}`;
 		return {
 			disabled: false,
 			range: [2010, 2020],
 			locale: 'en',
 			onChange: function () {
-			}
+			},
+			value: today
 		};
 	},
 	propTypes: {
@@ -35,32 +43,27 @@ export default React.createClass({
 	getInitialState: function () {
 		var today = this.returnToday();
 		return {
-			selectedDate: this.props.value || today,
 			isCalendarShow: false
 		};
 
 	},
 	onClickCalendar: function (date) {
 		this.setState({
-			selectedDate: date,
 			isCalendarShow: false
-		}, function () {
-			this.props.onChange(date);
 		});
+		this.props.onChange(date);
 	},
 	selectToday: function () {
 		var today = this.returnToday();
 
 		this.setState({
-			selectedDate: today,
 			isCalendarShow: false
-		}, function() {
-			this.props.onChange(today);
 		});
+		this.props.onChange(today);
 	},
 	calender: function () {
 		return (
-			<Calendar onClickCalendar={this.onClickCalendar} date={this.state.selectedDate} selectToday={this.selectToday} range={this.props.range} locale={this.props.locale}/>
+			<Calendar onClickCalendar={this.onClickCalendar} date={this.props.value} selectToday={this.selectToday} range={this.props.range} locale={this.props.locale}/>
 		);
 	},
 	focusIn: function () {
@@ -74,7 +77,7 @@ export default React.createClass({
 	render: function () {
 		return (
 			<div className="datePicker">
-				<input className={`datePicker__input ${this.props.disabled === true ? 'datePicker__input--disabled' : ''}`} type='text' onFocus={this.focusIn} value={this.state.selectedDate} readOnly disabled={this.props.disabled}/>
+				<input className={`datePicker__input ${this.props.disabled === true ? 'datePicker__input--disabled' : ''}`} type='text' onFocus={this.focusIn} value={this.props.value} readOnly disabled={this.props.disabled}/>
 				{this.state.isCalendarShow === false ? null : this.calender()}
 			</div>
 		);
