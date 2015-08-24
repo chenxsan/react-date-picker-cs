@@ -934,11 +934,9 @@ exports['default'] = _react2['default'].createClass({
 	},
 	onClickCalendar: function onClickCalendar(date) {
 		this.setState({
-			selectedDate: date,
 			isCalendarShow: false
-		}, function () {
-			this.props.onChange(date);
 		});
+		this.props.onChange(date);
 	},
 	selectToday: function selectToday() {
 		var today = this.returnToday();
