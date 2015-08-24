@@ -14,8 +14,12 @@
   border-radius: 3px;
   font-size: 15px;
 }
+.datePicker__input--disabled {
+  cursor: not-allowed;
+}
 .datePicker__calendar {
   position: absolute;
+  z-index: 1;
   border: 1px solid #2e2e2e;
   border-radius: 3px;
   background: #fff;
@@ -34,6 +38,7 @@
 }
 .datePicker__day {
   padding: 5px;
+  text-align: right;
   cursor: pointer;
 }
 .datePicker__day:hover {

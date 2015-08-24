@@ -484,36 +484,39 @@ exports['default'] = _react2['default'].createClass({
 
 	getDefaultProps: function getDefaultProps() {
 		return {
-			range: [2010, 2020]
+			disabled: false,
+			range: [2010, 2020],
+			locale: 'en',
+			onChange: function onChange() {}
 		};
+	},
+	propTypes: {
+		disabled: _react2['default'].PropTypes.bool,
+		locale: _react2['default'].PropTypes.string,
+		onChange: _react2['default'].PropTypes.func.isRequired,
+		range: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number),
+		value: _react2['default'].PropTypes.string
 	},
 	returnToday: function returnToday() {
 		var today = new Date();
 		var year = '' + today.getFullYear();
-		var month = '' + (today.getMonth() + 1);
+		var month = '' + (today.getMonth() + 1); // 0 基，但是显示时不可能也 0 基
 		var day = '' + today.getDate();
-
-		if (month.length < 2) {
-			month = '0' + month;
-		}
-		month = (0, _lodashStringPadLeft2['default'])(month, '0', 2);
-
-		day = (0, _lodashStringPadLeft2['default'])(day, '0', 2);
-
+		month = (0, _lodashStringPadLeft2['default'])(month, 2, '0');
+		day = (0, _lodashStringPadLeft2['default'])(day, 2, '0');
 		today = year + '-' + month + '-' + day;
 		return today;
 	},
 	getInitialState: function getInitialState() {
-
 		var today = this.returnToday();
 		return {
-			today: today,
+			selectedDate: this.props.value || today,
 			isCalendarShow: false
 		};
 	},
 	onClickCalendar: function onClickCalendar(date) {
 		this.setState({
-			today: date,
+			selectedDate: date,
 			isCalendarShow: false
 		}, function () {
 			this.props.onChange(date);
@@ -523,14 +526,19 @@ exports['default'] = _react2['default'].createClass({
 		var today = this.returnToday();
 
 		this.setState({
-			today: today,
+			selectedDate: today,
 			isCalendarShow: false
+		}, function () {
+			this.props.onChange(today);
 		});
 	},
 	calender: function calender() {
-		return _react2['default'].createElement(_calendar2['default'], { onClickCalendar: this.onClickCalendar, date: this.state.today, selectToday: this.selectToday, range: this.props.range });
+		return _react2['default'].createElement(_calendar2['default'], { onClickCalendar: this.onClickCalendar, date: this.state.selectedDate, selectToday: this.selectToday, range: this.props.range, locale: this.props.locale });
 	},
 	focusIn: function focusIn() {
+		if (this.props.disabled === true) {
+			return;
+		}
 		this.setState({
 			isCalendarShow: true
 		});
@@ -539,8 +547,7 @@ exports['default'] = _react2['default'].createClass({
 		return _react2['default'].createElement(
 			'div',
 			{ className: "datePicker" },
-			_react2['default'].createElement('input', { className: "datePicker__input", type: 'text', onFocus: this.focusIn,
-				value: this.state.today, readOnly: true }),
+			_react2['default'].createElement('input', { className: 'datePicker__input ' + (this.props.disabled === true ? 'datePicker__input--disabled' : ''), type: 'text', onFocus: this.focusIn, value: this.state.selectedDate, readOnly: true, disabled: this.props.disabled }),
 			this.state.isCalendarShow === false ? null : this.calender()
 		);
 	}
@@ -552,6 +559,7 @@ module.exports = exports['default'];
 (function (global){
 /**
  * Created by sam on 7/23/15.
+ * 此页面的 month 为 1 基
  */
 'use strict';
 
@@ -584,44 +592,51 @@ var _weekDays2 = _interopRequireDefault(_weekDays);
 exports['default'] = _react2['default'].createClass({
     displayName: 'calendar',
 
+    propTypes: {
+        date: _react2['default'].PropTypes.string,
+        locale: _react2['default'].PropTypes.string,
+        onClickCalendar: _react2['default'].PropTypes.func.isRequired,
+        range: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number),
+        selectToday: _react2['default'].PropTypes.func.isRequired
+    },
     getInitialState: function getInitialState() {
         var date = new Date(this.props.date);
-        var month = date.getMonth();
+        var month = date.getMonth() + 1;
 
         return {
-            year: date.getFullYear(),
-            month: month,
-            day: date.getDate()
+            year: date.getFullYear(), // {number}
+            month: month, // {number}
+            day: date.getDate() // {number}
         };
     },
     prevMonth: function prevMonth() {
-        if (this.state.month === 0) {
+        if (this.state.month === 1) {
             this.setState({
-                month: 11,
-                year: this.state.year * 1 - 1
+                month: 12,
+                year: this.state.year - 1
             });
             return;
         }
         this.setState({
-            month: this.state.month * 1 - 1
+            month: this.state.month - 1
         });
     },
     nextMonth: function nextMonth() {
-        if (this.state.month === 11) {
+        if (this.state.month === 12) {
             this.setState({
-                month: 0,
-                year: this.state.year * 1 + 1
+                month: 1,
+                year: this.state.year + 1
             });
             return;
         }
         this.setState({
-            month: this.state.month * 1 + 1
+            month: this.state.month + 1
         });
     },
     mutateDate: function mutateDate() {
 
         // 选择天的时候
-        var date = this.state.year + '-' + (0, _lodashStringPadLeft2['default'])(this.state.month * 1 + 1, 2, '0') + '-' + (0, _lodashStringPadLeft2['default'])(this.state.day, 2, '0');
+        var date = this.state.year + '-' + (0, _lodashStringPadLeft2['default'])(this.state.month, 2, '0') + '-' + (0, _lodashStringPadLeft2['default'])(this.state.day, 2, '0');
         this.props.onClickCalendar(date);
     },
     selectYear: function selectYear(year) {
@@ -641,9 +656,7 @@ exports['default'] = _react2['default'].createClass({
             month: +month
         });
     },
-
     render: function render() {
-
         return _react2['default'].createElement(
             'div',
             { className: "datePicker__calendar" },
@@ -652,17 +665,17 @@ exports['default'] = _react2['default'].createClass({
                 { className: "datePicker__calendar__header" },
                 _react2['default'].createElement('span', { onClick: this.prevMonth, className: "datePicker__prev" }),
                 _react2['default'].createElement(_selectYear2['default'], { year: this.state.year, selectYear: this.selectYear, range: this.props.range }),
-                _react2['default'].createElement(_selectMonth2['default'], { month: this.state.month, selectMonth: this.selectMonth }),
+                _react2['default'].createElement(_selectMonth2['default'], { month: this.state.month, selectMonth: this.selectMonth, locale: this.props.locale }),
                 _react2['default'].createElement('span', { onClick: this.nextMonth, className: "datePicker__next" })
             ),
-            _react2['default'].createElement(_weekDays2['default'], { highlight: new Date(this.props.date).getFullYear() === this.state.year && new Date(this.props.date).getMonth() === this.state.month, year: this.state.year, month: this.state.month, day: this.state.day, selectDay: this.selectDay }),
+            _react2['default'].createElement(_weekDays2['default'], { locale: this.props.locale, highlight: new Date(this.props.date).getFullYear() === this.state.year && new Date(this.props.date).getMonth() + 1 === this.state.month, year: this.state.year, month: this.state.month, day: this.state.day, selectDay: this.selectDay }),
             _react2['default'].createElement(
                 'div',
                 { className: "datePicker__btnGroup" },
                 _react2['default'].createElement(
                     'button',
                     { className: "datePicker__btn datePicker__btn--today", onClick: this.props.selectToday },
-                    '今天'
+                    this.props.locale === 'zh' ? '今天' : 'Today'
                 )
             )
         );
@@ -693,20 +706,31 @@ var _react2 = _interopRequireDefault(_react);
 exports['default'] = _react2['default'].createClass({
     displayName: 'selectMonth',
 
+    propTypes: {
+        locale: _react2['default'].PropTypes.string,
+        month: _react2['default'].PropTypes.number,
+        selectMonth: _react2['default'].PropTypes.func.isRequired
+    },
     getDefaultProps: function getDefaultProps() {
         return {
-            range: ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十', '十一', '十二']
+            range: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
         };
     },
     handleChange: function handleChange(e) {
         this.props.selectMonth(e.currentTarget.value);
     },
     render: function render() {
-        var options = this.props.range.map(function (option, index) {
+        var months;
+        if (this.props.locale === 'zh') {
+            months = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+        } else {
+            months = ['January', 'February', 'March', ' April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        }
+        var options = months.map(function (month, index) {
             return _react2['default'].createElement(
                 'option',
-                { key: index, value: index },
-                option + '月'
+                { key: index, value: index + 1 },
+                '' + month
             );
         });
         return _react2['default'].createElement(
@@ -742,9 +766,14 @@ var _react2 = _interopRequireDefault(_react);
 exports["default"] = _react2["default"].createClass({
     displayName: "selectYear",
 
+    propTypes: {
+        range: _react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.number),
+        selectYear: _react2["default"].PropTypes.func.isRequired,
+        year: _react2["default"].PropTypes.number
+    },
     getDefaultProps: function getDefaultProps() {
         return {
-            year: 2015
+            year: new Date().getFullYear()
         };
     },
     handleChange: function handleChange(e) {
@@ -799,6 +828,12 @@ var _react2 = _interopRequireDefault(_react);
 exports["default"] = _react2["default"].createClass({
     displayName: "week",
 
+    propTypes: {
+        day: _react2["default"].PropTypes.number, // input 中的 day 值，
+        days: _react2["default"].PropTypes.array, // 要渲染的数组，正常长度为 7
+        highlight: _react2["default"].PropTypes.bool, // 表示要高亮特定的 yyyy-mm-dd 日期
+        selectDay: _react2["default"].PropTypes.func.isRequired
+    },
     handleClick: function handleClick(e) {
         this.props.selectDay(e.target.textContent);
     },
@@ -807,7 +842,7 @@ exports["default"] = _react2["default"].createClass({
             if (day) {
 
                 // 仅高亮今天
-                if (day == this.props.day && this.props.highlight) {
+                if (day === this.props.day && this.props.highlight) {
                     return _react2["default"].createElement(
                         "td",
                         { key: index, className: "datePicker__day--today datePicker__day", onClick: this.handleClick },
@@ -844,7 +879,7 @@ exports.__hotReload = __hotReload;
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
-    value: true
+	value: true
 });
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -866,85 +901,84 @@ var _week = require('./week');
 var _week2 = _interopRequireDefault(_week);
 
 exports['default'] = _react2['default'].createClass({
-    displayName: 'weekDays',
+	displayName: 'weekDays',
 
-    selectDay: function selectDay(val) {
-        this.props.selectDay(val);
-    },
-    render: function render() {
+	propTypes: {
+		day: _react2['default'].PropTypes.number,
+		highlight: _react2['default'].PropTypes.bool,
+		locale: _react2['default'].PropTypes.string,
+		month: _react2['default'].PropTypes.number,
+		range: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number),
+		selectDay: _react2['default'].PropTypes.func.isRequired,
+		year: _react2['default'].PropTypes.number
+	},
+	selectDay: function selectDay(val) {
+		this.props.selectDay(val);
+	},
+	render: function render() {
 
-        // 计算某年某月总共的天数
-        var days = new Date(this.props.year, this.props.month + 1, 0).getDate();
+		// 计算某年某月总共的天数
+		var days = new Date(this.props.year, this.props.month, 0).getDate(); // 8 月 0 号即 7 月最后一天
 
-        // 该月第一天是周几，0 是周天，1 是周一
-        var firstDay = new Date(this.props.year, this.props.month, 1).getDay();
+		// 该月第一天是周几，0 是周天，1 是周一
+		var firstDay = new Date(this.props.year, this.props.month - 1, 1).getDay();
 
-        var range = (0, _lodashUtilityRange2['default'])(1, days + 1); // lodash 的 range 并不包括 end 值
+		var range = (0, _lodashUtilityRange2['default'])(1, days + 1); // lodash 的 range 并不包括 end 值
 
-        for (var i = 0, l = firstDay; i < l; i++) {
-            range.unshift(undefined);
-        }
+		for (var i = 0, l = firstDay; i < l; i++) {
+			range.unshift(undefined);
+		}
 
-        var chunks = (0, _lodashArrayChunk2['default'])(range, 7); // 分割成长度为 7 的数组段
+		var chunks = (0, _lodashArrayChunk2['default'])(range, 7); // 分割成长度为 7 的数组段
 
-        var weekDays = [];
-        for (var j = 0, len = chunks.length; j < len; j++) {
-            weekDays.push(_react2['default'].createElement(_week2['default'], { key: j, highlight: this.props.highlight, year: this.props.year, month: this.props.month, days: chunks[j], selectDay: this.selectDay, day: this.props.day }));
-        }
+		var weekDays = [];
+		for (var j = 0, len = chunks.length; j < len; j++) {
+			// 如果 chunks[j] 长度不足 7，则补充到 7
+			if (chunks[j].length < 7) {
+				for (var m = chunks[j].length, n = 7; m < n; m++) {
+					chunks[j].push(undefined);
+				}
+			}
+			weekDays.push(_react2['default'].createElement(_week2['default'], { key: j, highlight: this.props.highlight, days: chunks[j], selectDay: this.selectDay, day: this.props.day }));
+		}
+		var weekTitle;
+		if (this.props.locale === 'zh') {
+			weekTitle = ['日', '一', '二', '三', '四', '五', '六'].map(function (v) {
+				return _react2['default'].createElement(
+					'th',
+					{ key: v },
+					v
+				);
+			});
+		} else {
+			weekTitle = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map(function (v) {
+				return _react2['default'].createElement(
+					'th',
+					{ key: v },
+					v
+				);
+			});
+		}
 
-        return _react2['default'].createElement(
-            'table',
-            null,
-            _react2['default'].createElement(
-                'thead',
-                null,
-                _react2['default'].createElement(
-                    'tr',
-                    null,
-                    _react2['default'].createElement(
-                        'th',
-                        null,
-                        '日'
-                    ),
-                    _react2['default'].createElement(
-                        'th',
-                        null,
-                        '一'
-                    ),
-                    _react2['default'].createElement(
-                        'th',
-                        null,
-                        '二'
-                    ),
-                    _react2['default'].createElement(
-                        'th',
-                        null,
-                        '三'
-                    ),
-                    _react2['default'].createElement(
-                        'th',
-                        null,
-                        '四'
-                    ),
-                    _react2['default'].createElement(
-                        'th',
-                        null,
-                        '五'
-                    ),
-                    _react2['default'].createElement(
-                        'th',
-                        null,
-                        '六'
-                    )
-                )
-            ),
-            _react2['default'].createElement(
-                'tbody',
-                null,
-                weekDays
-            )
-        );
-    }
+		return _react2['default'].createElement(
+			'table',
+			null,
+			_react2['default'].createElement(
+				'thead',
+				null,
+				_react2['default'].createElement(
+					'tr',
+					null,
+					weekTitle
+				)
+			),
+			_react2['default'].createElement(
+				'tbody',
+				null,
+				weekDays
+			)
+		);
+	}
 });
 var __hotReload = true;
 exports.__hotReload = __hotReload;
