@@ -1,6 +1,8 @@
 {
   "name": "react-date-picker-cs",
   "version": "0.1.7",
+  "registry": "npm",
+  "format": "es6",
   "description": "React DatePicker",
   "main": "lib/ReactDatePicker.js",
   "author": "Sam Chen",
