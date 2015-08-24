@@ -19,8 +19,9 @@ If you use [jspm](https://github.com/jspm/jspm-cli), then:
 ```
 jspm install npm:react-date-picker-cs
 ```
+then `import 'react-date-picker-cs'` where you want to use.
 
-You can also link to `dist/react-date-picker-cs.js` and `dist/ReactDatePicker.css` in your HTML directly。
+You can also link to `dist/react-date-picker-cs.js` and `dist/ReactDatePicker.css` in your HTML directly if you don't use anything like browserify or webpack or jspm。
 
 ## Usage
 
@@ -57,6 +58,7 @@ React.render(<App />, document.getElementById('app'));
 * onChange {Function} - When user change the date
 * locale {String} - Default to `en`, you can also use `zh`
 * disabled {Boolean} - Default to `false`, you can pass in `true` to disable component
+* value {String} - the default date
 
 ### Modify styles
 
@@ -70,7 +72,7 @@ I had only test it with the latest Firefox、Chrome and Safari on Mac OSX.
 
 The source code is in `src` folder, so you can customize it as you like.
 
-Anything related to developing this component, please check [JedWatson/generator-react-component](https://github.com/JedWatson/generator-react-component). 
+Anything related to developing this component, please check [JedWatson/generator-react-component](https://github.com/JedWatson/generator-react-component).
 
 ## Test
 
@@ -83,4 +85,3 @@ npm test
 ## License
 
 MIT. Copyright (c) 2015 Sam Chen.
-
