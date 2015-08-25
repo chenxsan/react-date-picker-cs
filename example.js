@@ -9,7 +9,7 @@ var App = React.createClass({
 
 	getInitialState: function getInitialState() {
 		return {
-			selectedDate: '2015-07-20'
+			selectedDate: ''
 		};
 	},
 	log: function log(date) {

@@ -498,7 +498,7 @@ exports['default'] = _react2['default'].createClass({
         selectToday: _react2['default'].PropTypes.func.isRequired
     },
     getInitialState: function getInitialState() {
-        var date = new Date(this.props.date);
+        var date = new Date(this.props.date || this.props.returnToday());
         var month = date.getMonth() + 1;
 
         return {
@@ -934,7 +934,6 @@ exports['default'] = _react2['default'].createClass({
 		return today;
 	},
 	getInitialState: function getInitialState() {
-		var today = this.returnToday();
 		return {
 			isCalendarShow: false
 		};
@@ -954,7 +953,7 @@ exports['default'] = _react2['default'].createClass({
 		this.props.onChange(today);
 	},
 	calender: function calender() {
-		return _react2['default'].createElement(_calendar2['default'], { onClickCalendar: this.onClickCalendar, date: this.props.value, selectToday: this.selectToday, range: this.props.range, locale: this.props.locale });
+		return _react2['default'].createElement(_calendar2['default'], { onClickCalendar: this.onClickCalendar, date: this.props.value, selectToday: this.selectToday, range: this.props.range, locale: this.props.locale, returnToday: this.returnToday });
 	},
 	focusIn: function focusIn() {
 		if (this.props.disabled === true) {
