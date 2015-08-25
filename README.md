@@ -19,9 +19,9 @@ If you use [jspm](https://github.com/jspm/jspm-cli), then:
 ```
 jspm install npm:react-date-picker-cs
 ```
-then `import 'react-date-picker-cs'` where you want to use.
+then `import DatePicker from 'react-date-picker-cs'` where you want to use.
 
-You can also link to `dist/react-date-picker-cs.js` and `dist/ReactDatePicker.css` in your HTML directly if you don't use anything like browserify or webpack or jspm。
+You can also link to `dist/react-date-picker-cs.js` and `dist/ReactDatePicker.css` in your HTML directly if you don't use some tools like browserify or webpack or jspm。
 
 ## Usage
 
@@ -50,7 +50,7 @@ var App = React.createClass({
 	render () {
 		return (
 			<div>
-				<ReactDatePicker onChange={this.log} range={[2013, 2020]} value={this.state.selectedDate} onFocusIn={this.onFocusInCalendar} disabled={true}/>
+				<ReactDatePicker onChange={this.log} range={[2013, 2020]} value={this.state.selectedDate} onFocusIn={this.onFocusInCalendar} disabled={true} isCalendarShow={this.state.isCalendarShow}/>
 			</div>
 		);
 	}
@@ -62,11 +62,11 @@ React.render(<App />, document.getElementById('app'));
 ### Properties
 
 * range {Array} - You can customize the range of year
-* onChange {Function} - When user change the date
-* locale {String} - Default to `en`, you can also use `zh`
-* disabled {Boolean} - Default to `false`, you can pass in `true` to disable component
-* value {String} - the default date
-* onFocusIn {Function} - Most of the time, you would show the calenar
+* onChange {Function} - When user set a date
+* locale {String} - Defaults to `en`, you can also use `zh`
+* disabled {Boolean} - Defaults to `false`, you can pass in `true` to disable component
+* value {String} - Set a default date
+* onFocusIn {Function} - Most of the time you would set `isCalendarShow` to true.
 
 ### Modify styles
 
