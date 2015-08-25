@@ -4,18 +4,25 @@ var ReactDatePicker = require('react-date-picker-cs');
 var App = React.createClass({
 	getInitialState: function() {
 		return {
-			selectedDate: ''
+			value: '',
+			isCalendarShow: false
 		};
 	},
 	log: function(date) {
 		this.setState({
-			selectedDate: date
+			value: date,
+			isCalendarShow: false
 		});
+	},
+	onFocusInCalendar() {
+		this.setState({
+			isCalendarShow: true
+		})
 	},
 	render () {
 		return (
 			<div>
-				<ReactDatePicker onChange={this.log} range={[2013, 2020]} value={this.state.selectedDate}/>
+				<ReactDatePicker {...this.state} onChange={this.log} onFocusIn={this.onFocusInCalendar}/>
 			</div>
 		);
 	}

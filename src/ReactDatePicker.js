@@ -14,6 +14,10 @@ export default React.createClass({
 			locale: 'en',
 			onChange: function (date) {
 				// i will give you the date
+				// you also can decide whether to hide the popup calendar by passing this.props.isCalendarShow
+			},
+			onFocusIn: function() {
+
 			},
 			value: ''
 		};
@@ -22,27 +26,15 @@ export default React.createClass({
 		disabled: React.PropTypes.bool,
 		locale: React.PropTypes.string,
 		onChange: React.PropTypes.func.isRequired,
+		onFocusIn: React.PropTypes.func,
 		range: React.PropTypes.arrayOf(React.PropTypes.number),
 		value: React.PropTypes.string
 	},
-	getInitialState: function () {
-		return {
-			isCalendarShow: false
-		};
-
-	},
 	onClickCalendar: function (date) {
-		this.setState({
-			isCalendarShow: false
-		});
 		this.props.onChange(date);
 	},
 	selectToday: function () {
 		var today = this.getToday();
-
-		this.setState({
-			isCalendarShow: false
-		});
 		this.props.onChange(today);
 	},
 	calender: function () {
@@ -54,15 +46,13 @@ export default React.createClass({
 		if (this.props.disabled === true) {
 			return;
 		}
-		this.setState({
-			isCalendarShow: true
-		});
+		this.props.onFocusIn()
 	},
 	render: function () {
 		return (
 			<div className="datePicker">
 				<input className={`datePicker__input ${this.props.disabled === true ? 'datePicker__input--disabled' : ''}`} type='text' onFocus={this.focusIn} value={this.props.value} readOnly disabled={this.props.disabled}/>
-				{this.state.isCalendarShow === false ? null : this.calender()}
+				{this.props.isCalendarShow === false ? null : this.calender()}
 			</div>
 		);
 	}

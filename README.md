@@ -32,18 +32,25 @@ var ReactDatePicker = require('react-date-picker-cs');
 var App = React.createClass({
 	getInitialState: function() {
 		return {
-			selectedDate: '2015-07-20'
+			selectedDate: '2015-07-20',
+			isCalendarShow: false
 		};
 	},
 	log: function(date) {
 		this.setState({
-			selectedDate: date
+			selectedDate: date,
+			isCalendarShow: false
 		});
+	},
+	onFocusInCalendar() {
+		this.setState({
+			isCalendarShow: true
+			})
 	},
 	render () {
 		return (
 			<div>
-				<ReactDatePicker onChange={this.log} range={[2013, 2020]} value={this.state.selectedDate} disabled={true}/>
+				<ReactDatePicker onChange={this.log} range={[2013, 2020]} value={this.state.selectedDate} onFocusIn={this.onFocusInCalendar} disabled={true}/>
 			</div>
 		);
 	}
@@ -59,6 +66,7 @@ React.render(<App />, document.getElementById('app'));
 * locale {String} - Default to `en`, you can also use `zh`
 * disabled {Boolean} - Default to `false`, you can pass in `true` to disable component
 * value {String} - the default date
+* onFocusIn {Function} - Most of the time, you would show the calenar
 
 ### Modify styles
 
