@@ -3,12 +3,13 @@
  * 此页面的 month 为 1 基
  */
 import React from 'react';
-import padLeft from 'lodash/string/padLeft';
 import SelectYear from './selectYear';
 import SelectMonth from './selectMonth';
 import WeekDays from './weekDays';
+import getTodayMixin from './getTodayMixin';
 
 export default React.createClass({
+	mixins: [getTodayMixin],
 	propTypes: {
 		date: React.PropTypes.string,
 		locale: React.PropTypes.string,
@@ -17,7 +18,7 @@ export default React.createClass({
 		selectToday: React.PropTypes.func.isRequired
 	},
     getInitialState: function () {
-        var date = new Date(this.props.date || this.props.returnToday());
+        var date = new Date(this.props.date || this.getToday());
         var month = date.getMonth() + 1;
 
         return {
@@ -53,7 +54,11 @@ export default React.createClass({
     mutateDate: function() {
 
         // 选择天的时候
-        var date = `${this.state.year}-${padLeft(this.state.month, 2, '0')}-${padLeft(this.state.day, 2, '0')}`;
+				let month = String(this.state.month)
+				month = month.length < 2 ? `0${month}` : `${month}`
+				let day = String(this.state.day)
+				day = day.length < 2 ? `0${day}` : `${day}`
+        var date = `${this.state.year}-${month}-${day}`;
         this.props.onClickCalendar(date);
     },
     selectYear: function (year) {

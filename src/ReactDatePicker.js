@@ -3,24 +3,19 @@
  */
 import React from 'react';
 import Calendar from './calendar';
-import padLeft from 'lodash/string/padLeft';
+import getTodayMixin from './getTodayMixin';
 
 export default React.createClass({
+	mixins: [getTodayMixin],
 	getDefaultProps: function () {
-		var today = new Date();
-		var year = `${today.getFullYear()}`;
-		var month = `${today.getMonth() + 1}`; // 0 基，但是显示时不可能也 0 基
-		var day = `${today.getDate()}`;
-		month = padLeft(month, 2, '0');
-		day = padLeft(day, 2, '0');
-		today = `${year}-${month}-${day}`;
 		return {
 			disabled: false,
 			range: [2010, 2020],
 			locale: 'en',
-			onChange: function () {
+			onChange: function (date) {
+				// i will give you the date
 			},
-			value: today
+			value: ''
 		};
 	},
 	propTypes: {
@@ -29,16 +24,6 @@ export default React.createClass({
 		onChange: React.PropTypes.func.isRequired,
 		range: React.PropTypes.arrayOf(React.PropTypes.number),
 		value: React.PropTypes.string
-	},
-	returnToday: function () {
-		var today = new Date();
-		var year = `${today.getFullYear()}`;
-		var month = `${today.getMonth() + 1}`; // 0 基，但是显示时不可能也 0 基
-		var day = `${today.getDate()}`;
-		month = padLeft(month, 2, '0');
-		day = padLeft(day, 2, '0');
-		today = `${year}-${month}-${day}`;
-		return today;
 	},
 	getInitialState: function () {
 		return {
@@ -53,7 +38,7 @@ export default React.createClass({
 		this.props.onChange(date);
 	},
 	selectToday: function () {
-		var today = this.returnToday();
+		var today = this.getToday();
 
 		this.setState({
 			isCalendarShow: false
@@ -62,7 +47,7 @@ export default React.createClass({
 	},
 	calender: function () {
 		return (
-			<Calendar onClickCalendar={this.onClickCalendar} date={this.props.value} selectToday={this.selectToday} range={this.props.range} locale={this.props.locale} returnToday={this.returnToday}/>
+			<Calendar onClickCalendar={this.onClickCalendar} date={this.props.value} selectToday={this.selectToday} range={this.props.range} locale={this.props.locale}/>
 		);
 	},
 	focusIn: function () {
