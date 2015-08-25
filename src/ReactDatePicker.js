@@ -41,7 +41,6 @@ export default React.createClass({
 		return today;
 	},
 	getInitialState: function () {
-		var today = this.returnToday();
 		return {
 			isCalendarShow: false
 		};
@@ -63,7 +62,7 @@ export default React.createClass({
 	},
 	calender: function () {
 		return (
-			<Calendar onClickCalendar={this.onClickCalendar} date={this.props.value} selectToday={this.selectToday} range={this.props.range} locale={this.props.locale}/>
+			<Calendar onClickCalendar={this.onClickCalendar} date={this.props.value} selectToday={this.selectToday} range={this.props.range} locale={this.props.locale} returnToday={this.returnToday}/>
 		);
 	},
 	focusIn: function () {

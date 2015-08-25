@@ -4,7 +4,7 @@ var ReactDatePicker = require('react-date-picker-cs');
 var App = React.createClass({
 	getInitialState: function() {
 		return {
-			selectedDate: '2015-07-20'
+			selectedDate: ''
 		};
 	},
 	log: function(date) {

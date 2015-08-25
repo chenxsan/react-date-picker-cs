@@ -17,7 +17,7 @@ export default React.createClass({
 		selectToday: React.PropTypes.func.isRequired
 	},
     getInitialState: function () {
-        var date = new Date(this.props.date);
+        var date = new Date(this.props.date || this.props.returnToday());
         var month = date.getMonth() + 1;
 
         return {
