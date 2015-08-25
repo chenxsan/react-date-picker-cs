@@ -46,7 +46,7 @@ function chunk(array, size, guard) {
 
 module.exports = chunk;
 
-},{"../internal/baseSlice":3,"../internal/isIterateeCall":10}],2:[function(require,module,exports){
+},{"../internal/baseSlice":3,"../internal/isIterateeCall":7}],2:[function(require,module,exports){
 /**
  * The base implementation of `_.property` without support for deep paths.
  *
@@ -97,74 +97,6 @@ function baseSlice(array, start, end) {
 module.exports = baseSlice;
 
 },{}],4:[function(require,module,exports){
-/**
- * Converts `value` to a string if it's not one. An empty string is returned
- * for `null` or `undefined` values.
- *
- * @private
- * @param {*} value The value to process.
- * @returns {string} Returns the string.
- */
-function baseToString(value) {
-  return value == null ? '' : (value + '');
-}
-
-module.exports = baseToString;
-
-},{}],5:[function(require,module,exports){
-var baseToString = require('./baseToString'),
-    createPadding = require('./createPadding');
-
-/**
- * Creates a function for `_.padLeft` or `_.padRight`.
- *
- * @private
- * @param {boolean} [fromRight] Specify padding from the right.
- * @returns {Function} Returns the new pad function.
- */
-function createPadDir(fromRight) {
-  return function(string, length, chars) {
-    string = baseToString(string);
-    return (fromRight ? string : '') + createPadding(string, length, chars) + (fromRight ? '' : string);
-  };
-}
-
-module.exports = createPadDir;
-
-},{"./baseToString":4,"./createPadding":6}],6:[function(require,module,exports){
-(function (global){
-var repeat = require('../string/repeat');
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeCeil = Math.ceil,
-    nativeIsFinite = global.isFinite;
-
-/**
- * Creates the padding required for `string` based on the given `length`.
- * The `chars` string is truncated if the number of characters exceeds `length`.
- *
- * @private
- * @param {string} string The string to create padding for.
- * @param {number} [length=0] The padding length.
- * @param {string} [chars=' '] The string used as padding.
- * @returns {string} Returns the pad for `string`.
- */
-function createPadding(string, length, chars) {
-  var strLength = string.length;
-  length = +length;
-
-  if (strLength >= length || !nativeIsFinite(length)) {
-    return '';
-  }
-  var padLength = length - strLength;
-  chars = chars == null ? ' ' : (chars + '');
-  return repeat(chars, nativeCeil(padLength / chars.length)).slice(0, padLength);
-}
-
-module.exports = createPadding;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../string/repeat":14}],7:[function(require,module,exports){
 var baseProperty = require('./baseProperty');
 
 /**
@@ -181,7 +113,7 @@ var getLength = baseProperty('length');
 
 module.exports = getLength;
 
-},{"./baseProperty":2}],8:[function(require,module,exports){
+},{"./baseProperty":2}],5:[function(require,module,exports){
 var getLength = require('./getLength'),
     isLength = require('./isLength');
 
@@ -198,7 +130,7 @@ function isArrayLike(value) {
 
 module.exports = isArrayLike;
 
-},{"./getLength":7,"./isLength":11}],9:[function(require,module,exports){
+},{"./getLength":4,"./isLength":8}],6:[function(require,module,exports){
 /** Used to detect unsigned integer values. */
 var reIsUint = /^\d+$/;
 
@@ -224,7 +156,7 @@ function isIndex(value, length) {
 
 module.exports = isIndex;
 
-},{}],10:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 var isArrayLike = require('./isArrayLike'),
     isIndex = require('./isIndex'),
     isObject = require('../lang/isObject');
@@ -254,7 +186,7 @@ function isIterateeCall(value, index, object) {
 
 module.exports = isIterateeCall;
 
-},{"../lang/isObject":12,"./isArrayLike":8,"./isIndex":9}],11:[function(require,module,exports){
+},{"../lang/isObject":9,"./isArrayLike":5,"./isIndex":6}],8:[function(require,module,exports){
 /**
  * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
  * of an array-like value.
@@ -276,7 +208,7 @@ function isLength(value) {
 
 module.exports = isLength;
 
-},{}],12:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 /**
  * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
  * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
@@ -306,87 +238,7 @@ function isObject(value) {
 
 module.exports = isObject;
 
-},{}],13:[function(require,module,exports){
-var createPadDir = require('../internal/createPadDir');
-
-/**
- * Pads `string` on the left side if it's shorter than `length`. Padding
- * characters are truncated if they exceed `length`.
- *
- * @static
- * @memberOf _
- * @category String
- * @param {string} [string=''] The string to pad.
- * @param {number} [length=0] The padding length.
- * @param {string} [chars=' '] The string used as padding.
- * @returns {string} Returns the padded string.
- * @example
- *
- * _.padLeft('abc', 6);
- * // => '   abc'
- *
- * _.padLeft('abc', 6, '_-');
- * // => '_-_abc'
- *
- * _.padLeft('abc', 3);
- * // => 'abc'
- */
-var padLeft = createPadDir();
-
-module.exports = padLeft;
-
-},{"../internal/createPadDir":5}],14:[function(require,module,exports){
-(function (global){
-var baseToString = require('../internal/baseToString');
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeFloor = Math.floor,
-    nativeIsFinite = global.isFinite;
-
-/**
- * Repeats the given string `n` times.
- *
- * @static
- * @memberOf _
- * @category String
- * @param {string} [string=''] The string to repeat.
- * @param {number} [n=0] The number of times to repeat the string.
- * @returns {string} Returns the repeated string.
- * @example
- *
- * _.repeat('*', 3);
- * // => '***'
- *
- * _.repeat('abc', 2);
- * // => 'abcabc'
- *
- * _.repeat('abc', 0);
- * // => ''
- */
-function repeat(string, n) {
-  var result = '';
-  string = baseToString(string);
-  n = +n;
-  if (n < 1 || !string || !nativeIsFinite(n)) {
-    return result;
-  }
-  // Leverage the exponentiation by squaring algorithm for a faster repeat.
-  // See https://en.wikipedia.org/wiki/Exponentiation_by_squaring for more details.
-  do {
-    if (n % 2) {
-      result += string;
-    }
-    n = nativeFloor(n / 2);
-    string += string;
-  } while (n);
-
-  return result;
-}
-
-module.exports = repeat;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../internal/baseToString":4}],15:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var isIterateeCall = require('../internal/isIterateeCall');
 
 /* Native method references for those with the same name as other `lodash` methods. */
@@ -454,7 +306,7 @@ function range(start, end, step) {
 
 module.exports = range;
 
-},{"../internal/isIterateeCall":10}],16:[function(require,module,exports){
+},{"../internal/isIterateeCall":7}],11:[function(require,module,exports){
 /**
  * Created by sam on 7/23/15.
  * 此页面的 month 为 1 基
@@ -471,10 +323,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _lodashStringPadLeft = require('lodash/string/padLeft');
-
-var _lodashStringPadLeft2 = _interopRequireDefault(_lodashStringPadLeft);
-
 var _selectYear = require('./selectYear');
 
 var _selectYear2 = _interopRequireDefault(_selectYear);
@@ -487,9 +335,14 @@ var _weekDays = require('./weekDays');
 
 var _weekDays2 = _interopRequireDefault(_weekDays);
 
+var _getTodayMixin = require('./getTodayMixin');
+
+var _getTodayMixin2 = _interopRequireDefault(_getTodayMixin);
+
 exports['default'] = _react2['default'].createClass({
     displayName: 'calendar',
 
+    mixins: [_getTodayMixin2['default']],
     propTypes: {
         date: _react2['default'].PropTypes.string,
         locale: _react2['default'].PropTypes.string,
@@ -498,7 +351,7 @@ exports['default'] = _react2['default'].createClass({
         selectToday: _react2['default'].PropTypes.func.isRequired
     },
     getInitialState: function getInitialState() {
-        var date = new Date(this.props.date || this.props.returnToday());
+        var date = new Date(this.props.date || this.getToday());
         var month = date.getMonth() + 1;
 
         return {
@@ -534,7 +387,11 @@ exports['default'] = _react2['default'].createClass({
     mutateDate: function mutateDate() {
 
         // 选择天的时候
-        var date = this.state.year + '-' + (0, _lodashStringPadLeft2['default'])(this.state.month, 2, '0') + '-' + (0, _lodashStringPadLeft2['default'])(this.state.day, 2, '0');
+        var month = String(this.state.month);
+        month = month.length < 2 ? '0' + month : '' + month;
+        var day = String(this.state.day);
+        day = day.length < 2 ? '0' + day : '' + day;
+        var date = this.state.year + '-' + month + '-' + day;
         this.props.onClickCalendar(date);
     },
     selectYear: function selectYear(year) {
@@ -583,7 +440,27 @@ exports['default'] = _react2['default'].createClass({
 var __hotReload = true;
 exports.__hotReload = __hotReload;
 
-},{"./selectMonth":17,"./selectYear":18,"./weekDays":20,"lodash/string/padLeft":13,"react":undefined}],17:[function(require,module,exports){
+},{"./getTodayMixin":12,"./selectMonth":13,"./selectYear":14,"./weekDays":16,"react":undefined}],12:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+		value: true
+});
+exports["default"] = {
+		getToday: function getToday() {
+				var today = new Date();
+				var year = "" + today.getFullYear();
+				var month = "" + (today.getMonth() + 1); // 0 基，但是显示时不可能也 0 基
+				var day = "" + today.getDate();
+				month = month.length < 2 ? "0" + month : month;
+				day = day.length < 2 ? "0" + day : day;
+				today = year + "-" + month + "-" + day;
+				return today;
+		}
+};
+module.exports = exports["default"];
+
+},{}],13:[function(require,module,exports){
 /**
  * Created by sam on 7/23/15.
  */
@@ -639,7 +516,7 @@ exports['default'] = _react2['default'].createClass({
 var __hotReload = true;
 exports.__hotReload = __hotReload;
 
-},{"react":undefined}],18:[function(require,module,exports){
+},{"react":undefined}],14:[function(require,module,exports){
 /**
  * Created by sam on 7/23/15.
  */
@@ -700,7 +577,7 @@ exports["default"] = _react2["default"].createClass({
 var __hotReload = true;
 exports.__hotReload = __hotReload;
 
-},{"react":undefined}],19:[function(require,module,exports){
+},{"react":undefined}],15:[function(require,module,exports){
 /**
  * Created by sam on 7/24/15.
  * 生成单行的星期
@@ -762,7 +639,7 @@ exports["default"] = _react2["default"].createClass({
 var __hotReload = true;
 exports.__hotReload = __hotReload;
 
-},{"react":undefined}],20:[function(require,module,exports){
+},{"react":undefined}],16:[function(require,module,exports){
 /**
  * Created by sam on 7/24/15.
  */
@@ -873,7 +750,7 @@ exports['default'] = _react2['default'].createClass({
 var __hotReload = true;
 exports.__hotReload = __hotReload;
 
-},{"./week":19,"lodash/array/chunk":1,"lodash/utility/range":15,"react":undefined}],"react-date-picker-cs":[function(require,module,exports){
+},{"./week":15,"lodash/array/chunk":1,"lodash/utility/range":10,"react":undefined}],"react-date-picker-cs":[function(require,module,exports){
 /**
  * Created by sam on 7/23/15.
  */
@@ -893,85 +770,60 @@ var _calendar = require('./calendar');
 
 var _calendar2 = _interopRequireDefault(_calendar);
 
-var _lodashStringPadLeft = require('lodash/string/padLeft');
+var _getTodayMixin = require('./getTodayMixin');
 
-var _lodashStringPadLeft2 = _interopRequireDefault(_lodashStringPadLeft);
+var _getTodayMixin2 = _interopRequireDefault(_getTodayMixin);
 
 exports['default'] = _react2['default'].createClass({
 	displayName: 'ReactDatePicker',
 
+	mixins: [_getTodayMixin2['default']],
 	getDefaultProps: function getDefaultProps() {
-		var today = new Date();
-		var year = '' + today.getFullYear();
-		var month = '' + (today.getMonth() + 1); // 0 基，但是显示时不可能也 0 基
-		var day = '' + today.getDate();
-		month = (0, _lodashStringPadLeft2['default'])(month, 2, '0');
-		day = (0, _lodashStringPadLeft2['default'])(day, 2, '0');
-		today = year + '-' + month + '-' + day;
 		return {
 			disabled: false,
 			range: [2010, 2020],
 			locale: 'en',
-			onChange: function onChange() {},
-			value: today
+			onChange: function onChange(date) {
+				// i will give you the date
+				// you also can decide whether to hide the popup calendar by passing this.props.isCalendarShow
+			},
+			onFocusIn: function onFocusIn() {},
+			value: ''
 		};
 	},
 	propTypes: {
 		disabled: _react2['default'].PropTypes.bool,
 		locale: _react2['default'].PropTypes.string,
 		onChange: _react2['default'].PropTypes.func.isRequired,
+		onFocusIn: _react2['default'].PropTypes.func,
 		range: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number),
 		value: _react2['default'].PropTypes.string
 	},
-	returnToday: function returnToday() {
-		var today = new Date();
-		var year = '' + today.getFullYear();
-		var month = '' + (today.getMonth() + 1); // 0 基，但是显示时不可能也 0 基
-		var day = '' + today.getDate();
-		month = (0, _lodashStringPadLeft2['default'])(month, 2, '0');
-		day = (0, _lodashStringPadLeft2['default'])(day, 2, '0');
-		today = year + '-' + month + '-' + day;
-		return today;
-	},
-	getInitialState: function getInitialState() {
-		return {
-			isCalendarShow: false
-		};
-	},
 	onClickCalendar: function onClickCalendar(date) {
-		this.setState({
-			isCalendarShow: false
-		});
 		this.props.onChange(date);
 	},
 	selectToday: function selectToday() {
-		var today = this.returnToday();
-
-		this.setState({
-			isCalendarShow: false
-		});
+		var today = this.getToday();
 		this.props.onChange(today);
 	},
 	calender: function calender() {
-		return _react2['default'].createElement(_calendar2['default'], { onClickCalendar: this.onClickCalendar, date: this.props.value, selectToday: this.selectToday, range: this.props.range, locale: this.props.locale, returnToday: this.returnToday });
+		return _react2['default'].createElement(_calendar2['default'], { onClickCalendar: this.onClickCalendar, date: this.props.value, selectToday: this.selectToday, range: this.props.range, locale: this.props.locale });
 	},
 	focusIn: function focusIn() {
 		if (this.props.disabled === true) {
 			return;
 		}
-		this.setState({
-			isCalendarShow: true
-		});
+		this.props.onFocusIn();
 	},
 	render: function render() {
 		return _react2['default'].createElement(
 			'div',
 			{ className: "datePicker" },
 			_react2['default'].createElement('input', { className: 'datePicker__input ' + (this.props.disabled === true ? 'datePicker__input--disabled' : ''), type: 'text', onFocus: this.focusIn, value: this.props.value, readOnly: true, disabled: this.props.disabled }),
-			this.state.isCalendarShow === false ? null : this.calender()
+			this.props.isCalendarShow === false ? null : this.calender()
 		);
 	}
 });
 module.exports = exports['default'];
 
-},{"./calendar":16,"lodash/string/padLeft":13,"react":undefined}]},{},[]);
+},{"./calendar":11,"./getTodayMixin":12,"react":undefined}]},{},[]);
