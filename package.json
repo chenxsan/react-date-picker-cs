@@ -1,6 +1,6 @@
 {
   "name": "react-date-picker-cs",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "registry": "npm",
   "description": "React DatePicker",
   "main": "lib/ReactDatePicker.js",
