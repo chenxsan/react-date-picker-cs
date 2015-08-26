@@ -59,7 +59,6 @@ React.render(<App />, document.getElementById('app'));
 * locale {String} - Defaults to `en`, you can also use `zh`
 * disabled {Boolean} - Defaults to `false`, you can pass in `true` to disable component
 * value {String} - Set a default date
-* onFocusIn {Function} - Most of the time you would set `isCalendarShow` to true.
 
 ### Modify styles
 
