@@ -11,26 +11,19 @@ var App = React.createClass({
 
 	getInitialState: function getInitialState() {
 		return {
-			value: '',
-			isCalendarShow: false
+			value: ''
 		};
 	},
 	log: function log(date) {
 		this.setState({
-			value: date,
-			isCalendarShow: false
-		});
-	},
-	onFocusInCalendar: function onFocusInCalendar() {
-		this.setState({
-			isCalendarShow: true
+			value: date
 		});
 	},
 	render: function render() {
 		return React.createElement(
 			'div',
 			null,
-			React.createElement(ReactDatePicker, _extends({}, this.state, { onChange: this.log, onFocusIn: this.onFocusInCalendar }))
+			React.createElement(ReactDatePicker, _extends({}, this.state, { onChange: this.log }))
 		);
 	}
 });
