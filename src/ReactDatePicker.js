@@ -12,13 +12,6 @@ export default React.createClass({
 			disabled: false,
 			range: [2010, 2020],
 			locale: 'en',
-			onChange: function (date) {
-				// i will give you the date
-				// you also can decide whether to hide the popup calendar by passing this.props.isCalendarShow
-			},
-			onFocusIn: function() {
-
-			},
 			value: ''
 		};
 	},
@@ -26,16 +19,41 @@ export default React.createClass({
 		disabled: React.PropTypes.bool,
 		locale: React.PropTypes.string,
 		onChange: React.PropTypes.func.isRequired,
-		onFocusIn: React.PropTypes.func,
 		range: React.PropTypes.arrayOf(React.PropTypes.number),
 		value: React.PropTypes.string
 	},
+	getInitialState() {
+		return {
+			isCalendarShow: false
+		}
+	},
+	componentDidMount() {
+		document.addEventListener('click', this.documentClickHandler);
+	},
+	componentWillUnmount() {
+		document.removeEventListener('click', this.documentClickHandler);
+	},
+	documentClickHandler() {
+		this.setState({
+			isCalendarShow: false
+		})
+	},
+	onClickDatePickerArea(e) {
+
+		// stop the click event
+		e.nativeEvent.stopImmediatePropagation()
+	},
 	onClickCalendar: function (date) {
+		this.setState({
+			isCalendarShow: false
+		})
 		this.props.onChange(date);
 	},
 	selectToday: function () {
-		var today = this.getToday();
-		this.props.onChange(today);
+		this.setState({
+			isCalendarShow: false
+		})
+		this.props.onChange(this.getToday());
 	},
 	calender: function () {
 		return (
@@ -46,13 +64,15 @@ export default React.createClass({
 		if (this.props.disabled === true) {
 			return;
 		}
-		this.props.onFocusIn()
+		this.setState({
+			isCalendarShow: true
+		})
 	},
 	render: function () {
 		return (
-			<div className="datePicker">
+			<div className="datePicker" onClick={this.onClickDatePickerArea}>
 				<input className={`datePicker__input ${this.props.disabled === true ? 'datePicker__input--disabled' : ''}`} type='text' onFocus={this.focusIn} value={this.props.value} readOnly disabled={this.props.disabled}/>
-				{this.props.isCalendarShow === false ? null : this.calender()}
+				{this.state.isCalendarShow === false ? null : this.calender()}
 			</div>
 		);
 	}
