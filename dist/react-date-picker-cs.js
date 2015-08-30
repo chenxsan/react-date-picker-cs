@@ -309,6 +309,7 @@ module.exports = range;
 },{"../internal/isIterateeCall":7}],11:[function(require,module,exports){
 (function (global){
 /**
+ * 
  * Created by sam on 7/23/15.
  */
 'use strict';
@@ -409,6 +410,7 @@ module.exports = exports['default'];
 },{"./calendar":12,"./getTodayMixin":13}],12:[function(require,module,exports){
 (function (global){
 /**
+ * 
  * Created by sam on 7/23/15.
  * 此页面的 month 为 1 基
  */
@@ -467,11 +469,11 @@ exports['default'] = _react2['default'].createClass({
                 month: 12,
                 year: this.state.year - 1
             });
-            return;
+        } else {
+            this.setState({
+                month: this.state.month - 1
+            });
         }
-        this.setState({
-            month: this.state.month - 1
-        });
     },
     nextMonth: function nextMonth() {
         if (this.state.month === 12) {
@@ -479,11 +481,11 @@ exports['default'] = _react2['default'].createClass({
                 month: 1,
                 year: this.state.year + 1
             });
-            return;
+        } else {
+            this.setState({
+                month: this.state.month + 1
+            });
         }
-        this.setState({
-            month: this.state.month + 1
-        });
     },
     mutateDate: function mutateDate() {
 
@@ -497,19 +499,19 @@ exports['default'] = _react2['default'].createClass({
     },
     selectYear: function selectYear(year) {
         this.setState({
-            year: +year
+            year: year
         });
     },
     selectDay: function selectDay(day) {
         this.setState({
-            day: +day
+            day: day
         }, function () {
             this.mutateDate();
         });
     },
     selectMonth: function selectMonth(month) {
         this.setState({
-            month: +month
+            month: month
         });
     },
     render: function render() {
@@ -538,8 +540,7 @@ exports['default'] = _react2['default'].createClass({
     }
 
 });
-var __hotReload = true;
-exports.__hotReload = __hotReload;
+module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./getTodayMixin":13,"./selectMonth":14,"./selectYear":15,"./weekDays":17}],13:[function(require,module,exports){
@@ -556,8 +557,7 @@ exports["default"] = {
 				var day = "" + today.getDate();
 				month = month.length < 2 ? "0" + month : month;
 				day = day.length < 2 ? "0" + day : day;
-				today = year + "-" + month + "-" + day;
-				return today;
+				return year + "-" + month + "-" + day;
 		}
 };
 module.exports = exports["default"];
@@ -565,6 +565,7 @@ module.exports = exports["default"];
 },{}],14:[function(require,module,exports){
 (function (global){
 /**
+ * 
  * Created by sam on 7/23/15.
  */
 'use strict';
@@ -616,36 +617,34 @@ exports['default'] = _react2['default'].createClass({
         );
     }
 });
-var __hotReload = true;
-exports.__hotReload = __hotReload;
+module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],15:[function(require,module,exports){
 (function (global){
 /**
+ * 
  * Created by sam on 7/23/15.
  */
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; })();
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var _react2 = _interopRequireDefault(_react);
 
-exports["default"] = _react2["default"].createClass({
-    displayName: "selectYear",
+exports['default'] = _react2['default'].createClass({
+    displayName: 'selectYear',
 
     propTypes: {
-        range: _react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.number),
-        selectYear: _react2["default"].PropTypes.func.isRequired,
-        year: _react2["default"].PropTypes.number
+        range: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number),
+        selectYear: _react2['default'].PropTypes.func.isRequired,
+        year: _react2['default'].PropTypes.number
     },
     getDefaultProps: function getDefaultProps() {
         return {
@@ -656,100 +655,97 @@ exports["default"] = _react2["default"].createClass({
         this.props.selectYear(e.currentTarget.value);
     },
     render: function render() {
-        var _props$range = _slicedToArray(this.props.range, 2);
-
-        var start = _props$range[0];
-        var end = _props$range[1];
-
+        var start = typeof this.props.range === 'undefined' ? 1984 : this.props.range[0];
+        var end = typeof this.props.range === 'undefined' ? 2046 : this.props.range[1];
         var options = [];
         for (var i = start, l = end; i <= l; i++) {
             options.push(i);
         }
         options = options.map(function (option) {
-            return _react2["default"].createElement(
-                "option",
+            return _react2['default'].createElement(
+                'option',
                 { key: option, value: option },
                 option
             );
         });
-        return _react2["default"].createElement(
-            "select",
+        return _react2['default'].createElement(
+            'select',
             { value: this.props.year, className: "datePicker__year", onChange: this.handleChange },
             options
         );
     }
 });
-var __hotReload = true;
-exports.__hotReload = __hotReload;
+module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],16:[function(require,module,exports){
 (function (global){
 /**
+ * 
  * Created by sam on 7/24/15.
  * 生成单行的星期
  */
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
     value: true
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var _react2 = _interopRequireDefault(_react);
 
-exports["default"] = _react2["default"].createClass({
-    displayName: "week",
+exports['default'] = _react2['default'].createClass({
+    displayName: 'week',
 
     propTypes: {
-        day: _react2["default"].PropTypes.number, // input 中的 day 值，
-        days: _react2["default"].PropTypes.array, // 要渲染的数组，正常长度为 7
-        highlight: _react2["default"].PropTypes.bool, // 表示要高亮特定的 yyyy-mm-dd 日期
-        selectDay: _react2["default"].PropTypes.func.isRequired
+        day: _react2['default'].PropTypes.number, // input 中的 day 值，
+        days: _react2['default'].PropTypes.array.isRequired, // 要渲染的数组，正常长度为 7
+        highlight: _react2['default'].PropTypes.bool, // 表示要高亮特定的 yyyy-mm-dd 日期
+        selectDay: _react2['default'].PropTypes.func.isRequired
     },
     handleClick: function handleClick(e) {
         this.props.selectDay(e.target.textContent);
     },
     render: function render() {
-        var days = this.props.days.map(function (day, index) {
+        var days = (typeof this.props.days === 'undefined' ? [] : this.props.days).map(function (day, index) {
             if (day) {
 
                 // 仅高亮今天
                 if (day === this.props.day && this.props.highlight) {
-                    return _react2["default"].createElement(
-                        "td",
-                        { key: index, className: "datePicker__day--today datePicker__day", onClick: this.handleClick },
+                    return _react2['default'].createElement(
+                        'td',
+                        { key: index, className: 'datePicker__day--today datePicker__day', onClick: this.handleClick },
                         day
                     );
                 } else {
-                    return _react2["default"].createElement(
-                        "td",
+                    return _react2['default'].createElement(
+                        'td',
                         { key: index, className: "datePicker__day", onClick: this.handleClick },
                         day
                     );
                 }
             } else {
-                return _react2["default"].createElement("td", { key: index, className: "datePicker__day--disabled datePicker__day" });
+                return _react2['default'].createElement('td', { key: index, className: 'datePicker__day--disabled datePicker__day' });
             }
         }, this);
 
-        return _react2["default"].createElement(
-            "tr",
+        return _react2['default'].createElement(
+            'tr',
             null,
             days
         );
     }
 });
-var __hotReload = true;
-exports.__hotReload = __hotReload;
+module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],17:[function(require,module,exports){
 (function (global){
 /**
+ * 
  * Created by sam on 7/24/15.
  */
 'use strict';
@@ -780,13 +776,13 @@ exports['default'] = _react2['default'].createClass({
 	displayName: 'weekDays',
 
 	propTypes: {
-		day: _react2['default'].PropTypes.number,
+		day: _react2['default'].PropTypes.number.isRequired,
 		highlight: _react2['default'].PropTypes.bool,
 		locale: _react2['default'].PropTypes.string,
-		month: _react2['default'].PropTypes.number,
+		month: _react2['default'].PropTypes.number.isRequired,
 		range: _react2['default'].PropTypes.arrayOf(_react2['default'].PropTypes.number),
 		selectDay: _react2['default'].PropTypes.func.isRequired,
-		year: _react2['default'].PropTypes.number
+		year: _react2['default'].PropTypes.number.isRequired
 	},
 	selectDay: function selectDay(val) {
 		this.props.selectDay(val);
@@ -856,8 +852,7 @@ exports['default'] = _react2['default'].createClass({
 		);
 	}
 });
-var __hotReload = true;
-exports.__hotReload = __hotReload;
+module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./week":16,"lodash/array/chunk":1,"lodash/utility/range":10}]},{},[11])(11)

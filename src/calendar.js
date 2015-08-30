@@ -1,4 +1,5 @@
 /**
+ * @flow
  * Created by sam on 7/23/15.
  * 此页面的 month 为 1 基
  */
@@ -17,7 +18,7 @@ export default React.createClass({
 		range: React.PropTypes.arrayOf(React.PropTypes.number),
 		selectToday: React.PropTypes.func.isRequired
 	},
-    getInitialState: function () {
+    getInitialState: function ():Object {
         var date = new Date(this.props.date || this.getToday());
         var month = date.getMonth() + 1;
 
@@ -33,11 +34,11 @@ export default React.createClass({
                 month: 12,
                 year: this.state.year - 1
             });
-            return;
-        }
-        this.setState({
-            month: this.state.month - 1
-        });
+        } else {
+					this.setState({
+	            month: this.state.month - 1
+	        });
+				}
     },
     nextMonth: function () {
         if (this.state.month === 12) {
@@ -45,40 +46,40 @@ export default React.createClass({
                 month: 1,
                 year: this.state.year + 1
             });
-            return;
-        }
-        this.setState({
-            month: this.state.month + 1
-        });
+        } else {
+					this.setState({
+	            month: this.state.month + 1
+	        });
+				}
     },
     mutateDate: function() {
 
         // 选择天的时候
-				let month = String(this.state.month)
+				var month = String(this.state.month)
 				month = month.length < 2 ? `0${month}` : `${month}`
-				let day = String(this.state.day)
+				var day = String(this.state.day)
 				day = day.length < 2 ? `0${day}` : `${day}`
         var date = `${this.state.year}-${month}-${day}`;
         this.props.onClickCalendar(date);
     },
-    selectYear: function (year) {
+    selectYear: function (year:number) {
         this.setState({
-            year: +year
+            year: year
         });
     },
-    selectDay: function(day) {
+    selectDay: function(day:number) {
         this.setState({
-            day: +day
+            day: day
         }, function() {
             this.mutateDate();
         });
     },
-    selectMonth: function (month) {
+    selectMonth: function (month:number) {
         this.setState({
-            month: +month
+            month: month
         });
     },
-    render: function () {
+    render: function ():any {
         return (<div className="datePicker__calendar">
             <div className="datePicker__calendar__header">
                 <span onClick={this.prevMonth} className="datePicker__prev"></span>
@@ -92,5 +93,3 @@ export default React.createClass({
     }
 
 });
-
-export let __hotReload = true;

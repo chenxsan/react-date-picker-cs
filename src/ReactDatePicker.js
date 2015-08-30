@@ -1,4 +1,5 @@
 /**
+ * @flow
  * Created by sam on 7/23/15.
  */
 import React from 'react';
@@ -7,7 +8,7 @@ import getTodayMixin from './getTodayMixin';
 
 export default React.createClass({
 	mixins: [getTodayMixin],
-	getDefaultProps: function () {
+	getDefaultProps: function ():Object {
 		return {
 			disabled: false,
 			range: [2010, 2020],
@@ -38,12 +39,12 @@ export default React.createClass({
 			isCalendarShow: false
 		})
 	},
-	onClickDatePickerArea(e) {
+	onClickDatePickerArea(e:any) {
 
 		// stop the click event
 		e.nativeEvent.stopImmediatePropagation()
 	},
-	onClickCalendar: function (date) {
+	onClickCalendar: function (date:string) {
 		this.setState({
 			isCalendarShow: false
 		})
@@ -68,7 +69,7 @@ export default React.createClass({
 			isCalendarShow: true
 		})
 	},
-	render: function () {
+	render: function ():any {
 		return (
 			<div className="datePicker" onClick={this.onClickDatePickerArea}>
 				<input className={`datePicker__input ${this.props.disabled === true ? 'datePicker__input--disabled' : ''}`} type='text' onFocus={this.focusIn} value={this.props.value} readOnly disabled={this.props.disabled}/>

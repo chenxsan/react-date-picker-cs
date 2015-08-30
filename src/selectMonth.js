@@ -1,4 +1,5 @@
 /**
+ * @flow
  * Created by sam on 7/23/15.
  */
 import React from 'react';
@@ -9,15 +10,15 @@ export default React.createClass({
 		month: React.PropTypes.number,
 		selectMonth: React.PropTypes.func.isRequired
 	},
-    getDefaultProps: function() {
+    getDefaultProps: function():Object {
         return {
             range: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
         };
     },
-    handleChange: function(e) {
+    handleChange: function(e:any) {
       this.props.selectMonth(e.currentTarget.value);
     },
-    render: function() {
+    render: function():any {
 		var months;
 		if (this.props.locale === 'zh') {
 			months = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
@@ -34,5 +35,3 @@ export default React.createClass({
         );
     }
 });
-
-export let __hotReload = true;

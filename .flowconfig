@@ -1,0 +1,11 @@
+[ignore]
+./dist
+./example
+./lib
+./test
+./node_modules
+[include]
+
+[libs]
+
+[options]

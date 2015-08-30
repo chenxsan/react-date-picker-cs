@@ -1,4 +1,5 @@
 /**
+ * @flow
  * Created by sam on 7/24/15.
  */
 import React from 'react';
@@ -8,18 +9,18 @@ import Week from './week';
 
 export default React.createClass({
 	propTypes: {
-		day: React.PropTypes.number,
+		day: React.PropTypes.number.isRequired,
 		highlight: React.PropTypes.bool,
 		locale: React.PropTypes.string,
-		month: React.PropTypes.number,
+		month: React.PropTypes.number.isRequired,
 		range: React.PropTypes.arrayOf(React.PropTypes.number),
 		selectDay: React.PropTypes.func.isRequired,
-		year: React.PropTypes.number
+		year: React.PropTypes.number.isRequired
 	},
-	selectDay: function (val) {
+	selectDay: function (val:string) {
 		this.props.selectDay(val);
 	},
-	render: function () {
+	render: function ():any {
 
 		// 计算某年某月总共的天数
 		var days = new Date(this.props.year, this.props.month, 0).getDate(); // 8 月 0 号即 7 月最后一天
@@ -36,10 +37,10 @@ export default React.createClass({
 		var chunks = _chunk(range, 7); // 分割成长度为 7 的数组段
 
 		var weekDays = [];
-		for (let j = 0, len = chunks.length; j < len; j++) {
+		for (var j = 0, len = chunks.length; j < len; j++) {
 			// 如果 chunks[j] 长度不足 7，则补充到 7
 			if (chunks[j].length < 7) {
-				for (let m = chunks[j].length, n = 7; m < n; m++) {
+				for (var m = chunks[j].length, n = 7; m < n; m++) {
 					chunks[j].push(undefined);
 				}
 			}
@@ -70,5 +71,3 @@ export default React.createClass({
 		);
 	}
 });
-
-export let __hotReload = true;
