@@ -1,312 +1,4 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.ReactDatePicker = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var baseSlice = require('../internal/baseSlice'),
-    isIterateeCall = require('../internal/isIterateeCall');
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeCeil = Math.ceil,
-    nativeFloor = Math.floor,
-    nativeMax = Math.max;
-
-/**
- * Creates an array of elements split into groups the length of `size`.
- * If `collection` can't be split evenly, the final chunk will be the remaining
- * elements.
- *
- * @static
- * @memberOf _
- * @category Array
- * @param {Array} array The array to process.
- * @param {number} [size=1] The length of each chunk.
- * @param- {Object} [guard] Enables use as a callback for functions like `_.map`.
- * @returns {Array} Returns the new array containing chunks.
- * @example
- *
- * _.chunk(['a', 'b', 'c', 'd'], 2);
- * // => [['a', 'b'], ['c', 'd']]
- *
- * _.chunk(['a', 'b', 'c', 'd'], 3);
- * // => [['a', 'b', 'c'], ['d']]
- */
-function chunk(array, size, guard) {
-  if (guard ? isIterateeCall(array, size, guard) : size == null) {
-    size = 1;
-  } else {
-    size = nativeMax(nativeFloor(size) || 1, 1);
-  }
-  var index = 0,
-      length = array ? array.length : 0,
-      resIndex = -1,
-      result = Array(nativeCeil(length / size));
-
-  while (index < length) {
-    result[++resIndex] = baseSlice(array, index, (index += size));
-  }
-  return result;
-}
-
-module.exports = chunk;
-
-},{"../internal/baseSlice":3,"../internal/isIterateeCall":7}],2:[function(require,module,exports){
-/**
- * The base implementation of `_.property` without support for deep paths.
- *
- * @private
- * @param {string} key The key of the property to get.
- * @returns {Function} Returns the new function.
- */
-function baseProperty(key) {
-  return function(object) {
-    return object == null ? undefined : object[key];
-  };
-}
-
-module.exports = baseProperty;
-
-},{}],3:[function(require,module,exports){
-/**
- * The base implementation of `_.slice` without an iteratee call guard.
- *
- * @private
- * @param {Array} array The array to slice.
- * @param {number} [start=0] The start position.
- * @param {number} [end=array.length] The end position.
- * @returns {Array} Returns the slice of `array`.
- */
-function baseSlice(array, start, end) {
-  var index = -1,
-      length = array.length;
-
-  start = start == null ? 0 : (+start || 0);
-  if (start < 0) {
-    start = -start > length ? 0 : (length + start);
-  }
-  end = (end === undefined || end > length) ? length : (+end || 0);
-  if (end < 0) {
-    end += length;
-  }
-  length = start > end ? 0 : ((end - start) >>> 0);
-  start >>>= 0;
-
-  var result = Array(length);
-  while (++index < length) {
-    result[index] = array[index + start];
-  }
-  return result;
-}
-
-module.exports = baseSlice;
-
-},{}],4:[function(require,module,exports){
-var baseProperty = require('./baseProperty');
-
-/**
- * Gets the "length" property value of `object`.
- *
- * **Note:** This function is used to avoid a [JIT bug](https://bugs.webkit.org/show_bug.cgi?id=142792)
- * that affects Safari on at least iOS 8.1-8.3 ARM64.
- *
- * @private
- * @param {Object} object The object to query.
- * @returns {*} Returns the "length" value.
- */
-var getLength = baseProperty('length');
-
-module.exports = getLength;
-
-},{"./baseProperty":2}],5:[function(require,module,exports){
-var getLength = require('./getLength'),
-    isLength = require('./isLength');
-
-/**
- * Checks if `value` is array-like.
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
- */
-function isArrayLike(value) {
-  return value != null && isLength(getLength(value));
-}
-
-module.exports = isArrayLike;
-
-},{"./getLength":4,"./isLength":8}],6:[function(require,module,exports){
-/** Used to detect unsigned integer values. */
-var reIsUint = /^\d+$/;
-
-/**
- * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
- * of an array-like value.
- */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/**
- * Checks if `value` is a valid array-like index.
- *
- * @private
- * @param {*} value The value to check.
- * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
- * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
- */
-function isIndex(value, length) {
-  value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
-  length = length == null ? MAX_SAFE_INTEGER : length;
-  return value > -1 && value % 1 == 0 && value < length;
-}
-
-module.exports = isIndex;
-
-},{}],7:[function(require,module,exports){
-var isArrayLike = require('./isArrayLike'),
-    isIndex = require('./isIndex'),
-    isObject = require('../lang/isObject');
-
-/**
- * Checks if the provided arguments are from an iteratee call.
- *
- * @private
- * @param {*} value The potential iteratee value argument.
- * @param {*} index The potential iteratee index or key argument.
- * @param {*} object The potential iteratee object argument.
- * @returns {boolean} Returns `true` if the arguments are from an iteratee call, else `false`.
- */
-function isIterateeCall(value, index, object) {
-  if (!isObject(object)) {
-    return false;
-  }
-  var type = typeof index;
-  if (type == 'number'
-      ? (isArrayLike(object) && isIndex(index, object.length))
-      : (type == 'string' && index in object)) {
-    var other = object[index];
-    return value === value ? (value === other) : (other !== other);
-  }
-  return false;
-}
-
-module.exports = isIterateeCall;
-
-},{"../lang/isObject":9,"./isArrayLike":5,"./isIndex":6}],8:[function(require,module,exports){
-/**
- * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
- * of an array-like value.
- */
-var MAX_SAFE_INTEGER = 9007199254740991;
-
-/**
- * Checks if `value` is a valid array-like length.
- *
- * **Note:** This function is based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
- *
- * @private
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
- */
-function isLength(value) {
-  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-}
-
-module.exports = isLength;
-
-},{}],9:[function(require,module,exports){
-/**
- * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
- * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
- *
- * @static
- * @memberOf _
- * @category Lang
- * @param {*} value The value to check.
- * @returns {boolean} Returns `true` if `value` is an object, else `false`.
- * @example
- *
- * _.isObject({});
- * // => true
- *
- * _.isObject([1, 2, 3]);
- * // => true
- *
- * _.isObject(1);
- * // => false
- */
-function isObject(value) {
-  // Avoid a V8 JIT bug in Chrome 19-20.
-  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
-  var type = typeof value;
-  return !!value && (type == 'object' || type == 'function');
-}
-
-module.exports = isObject;
-
-},{}],10:[function(require,module,exports){
-var isIterateeCall = require('../internal/isIterateeCall');
-
-/* Native method references for those with the same name as other `lodash` methods. */
-var nativeCeil = Math.ceil,
-    nativeMax = Math.max;
-
-/**
- * Creates an array of numbers (positive and/or negative) progressing from
- * `start` up to, but not including, `end`. If `end` is not specified it is
- * set to `start` with `start` then set to `0`. If `end` is less than `start`
- * a zero-length range is created unless a negative `step` is specified.
- *
- * @static
- * @memberOf _
- * @category Utility
- * @param {number} [start=0] The start of the range.
- * @param {number} end The end of the range.
- * @param {number} [step=1] The value to increment or decrement by.
- * @returns {Array} Returns the new array of numbers.
- * @example
- *
- * _.range(4);
- * // => [0, 1, 2, 3]
- *
- * _.range(1, 5);
- * // => [1, 2, 3, 4]
- *
- * _.range(0, 20, 5);
- * // => [0, 5, 10, 15]
- *
- * _.range(0, -4, -1);
- * // => [0, -1, -2, -3]
- *
- * _.range(1, 4, 0);
- * // => [1, 1, 1]
- *
- * _.range(0);
- * // => []
- */
-function range(start, end, step) {
-  if (step && isIterateeCall(start, end, step)) {
-    end = step = undefined;
-  }
-  start = +start || 0;
-  step = step == null ? 1 : (+step || 0);
-
-  if (end == null) {
-    end = start;
-    start = 0;
-  } else {
-    end = +end || 0;
-  }
-  // Use `Array(length)` so engines like Chakra and V8 avoid slower modes.
-  // See https://youtu.be/XAqIpGU8ZZk#t=17m25s for more details.
-  var index = -1,
-      length = nativeMax(nativeCeil((end - start) / (step || 1)), 0),
-      result = Array(length);
-
-  while (++index < length) {
-    result[index] = start;
-    start += step;
-  }
-  return result;
-}
-
-module.exports = range;
-
-},{"../internal/isIterateeCall":7}],11:[function(require,module,exports){
 (function (global){
 /**
  * 
@@ -407,7 +99,7 @@ exports['default'] = _react2['default'].createClass({
 module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./calendar":12,"./getTodayMixin":13}],12:[function(require,module,exports){
+},{"./calendar":2,"./getTodayMixin":3}],2:[function(require,module,exports){
 (function (global){
 /**
  * 
@@ -526,7 +218,7 @@ exports['default'] = _react2['default'].createClass({
                 _react2['default'].createElement(_selectMonth2['default'], { month: this.state.month, selectMonth: this.selectMonth, locale: this.props.locale }),
                 _react2['default'].createElement('span', { onClick: this.nextMonth, className: "datePicker__next" })
             ),
-            _react2['default'].createElement(_weekDays2['default'], { locale: this.props.locale, highlight: new Date(this.props.date).getFullYear() === this.state.year && new Date(this.props.date).getMonth() + 1 === this.state.month, year: this.state.year, month: this.state.month, day: this.state.day, selectDay: this.selectDay }),
+            _react2['default'].createElement(_weekDays2['default'], { locale: this.props.locale, highlight: new Date(this.props.date).getFullYear() === this.state.year && new Date(this.props.date).getMonth() + 1 === this.state.month, year: this.state.year, month: this.state.month, day: Number(this.state.day), selectDay: this.selectDay }),
             _react2['default'].createElement(
                 'div',
                 { className: "datePicker__btnGroup" },
@@ -543,7 +235,7 @@ exports['default'] = _react2['default'].createClass({
 module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./getTodayMixin":13,"./selectMonth":14,"./selectYear":15,"./weekDays":17}],13:[function(require,module,exports){
+},{"./getTodayMixin":3,"./selectMonth":4,"./selectYear":5,"./weekDays":7}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -562,7 +254,7 @@ exports["default"] = {
 };
 module.exports = exports["default"];
 
-},{}],14:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 (function (global){
 /**
  * 
@@ -620,7 +312,7 @@ exports['default'] = _react2['default'].createClass({
 module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],15:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 (function (global){
 /**
  * 
@@ -678,7 +370,7 @@ exports['default'] = _react2['default'].createClass({
 module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],16:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 (function (global){
 /**
  * 
@@ -742,7 +434,7 @@ exports['default'] = _react2['default'].createClass({
 module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],17:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 (function (global){
 /**
  * 
@@ -756,17 +448,11 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+
 var _react = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var _react2 = _interopRequireDefault(_react);
-
-var _lodashUtilityRange = require('lodash/utility/range');
-
-var _lodashUtilityRange2 = _interopRequireDefault(_lodashUtilityRange);
-
-var _lodashArrayChunk = require('lodash/array/chunk');
-
-var _lodashArrayChunk2 = _interopRequireDefault(_lodashArrayChunk);
 
 var _week = require('./week');
 
@@ -795,13 +481,19 @@ exports['default'] = _react2['default'].createClass({
 		// 该月第一天是周几，0 是周天，1 是周一
 		var firstDay = new Date(this.props.year, this.props.month - 1, 1).getDay();
 
-		var range = (0, _lodashUtilityRange2['default'])(1, days + 1); // lodash 的 range 并不包括 end 值
+		var range = [].concat(_toConsumableArray(Array(days))).map(function (_, i) {
+			return i + 1;
+		});
 
 		for (var i = 0, l = firstDay; i < l; i++) {
 			range.unshift(undefined);
 		}
 
-		var chunks = (0, _lodashArrayChunk2['default'])(range, 7); // 分割成长度为 7 的数组段
+		var chunks = []; // 分割成长度为 7 的数组段
+
+		while (range.length > 0) {
+			chunks.push(range.splice(0, 7));
+		}
 
 		var weekDays = [];
 		for (var j = 0, len = chunks.length; j < len; j++) {
@@ -811,7 +503,7 @@ exports['default'] = _react2['default'].createClass({
 					chunks[j].push(undefined);
 				}
 			}
-			weekDays.push(_react2['default'].createElement(_week2['default'], { key: j, highlight: this.props.highlight, days: chunks[j], selectDay: this.selectDay, day: this.props.day }));
+			weekDays.push(_react2['default'].createElement(_week2['default'], { key: j, highlight: this.props.highlight, days: chunks[j], selectDay: this.selectDay, day: Number(this.props.day) }));
 		}
 		var weekTitle;
 		if (this.props.locale === 'zh') {
@@ -855,5 +547,5 @@ exports['default'] = _react2['default'].createClass({
 module.exports = exports['default'];
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./week":16,"lodash/array/chunk":1,"lodash/utility/range":10}]},{},[11])(11)
+},{"./week":6}]},{},[1])(1)
 });

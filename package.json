@@ -1,6 +1,6 @@
 {
   "name": "react-date-picker-cs",
-  "version": "0.1.24",
+  "version": "0.1.26",
   "registry": "npm",
   "description": "React DatePicker",
   "main": "lib/ReactDatePicker.js",
@@ -14,7 +14,6 @@
     "url": "https://github.com/chenxsan/react-date-picker-cs/issues"
   },
   "dependencies": {
-    "lodash": "^3.10.0",
     "react": "^0.13.3"
   },
   "devDependencies": {
@@ -25,6 +24,7 @@
     "eslint-plugin-react": "^2.5.0",
     "gulp": "^3.9.0",
     "jsdom": "^3.1.2",
+    "lodash": "^3.10.1",
     "mocha": "^2.2.5",
     "react-component-gulp-tasks": "^0.7.0"
   },

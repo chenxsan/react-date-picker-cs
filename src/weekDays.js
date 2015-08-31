@@ -3,8 +3,6 @@
  * Created by sam on 7/24/15.
  */
 import React from 'react';
-import _range from 'lodash/utility/range';
-import _chunk from 'lodash/array/chunk';
 import Week from './week';
 
 export default React.createClass({
@@ -28,13 +26,17 @@ export default React.createClass({
 		// 该月第一天是周几，0 是周天，1 是周一
 		var firstDay = new Date(this.props.year, this.props.month - 1, 1).getDay();
 
-		var range = _range(1, days + 1); // lodash 的 range 并不包括 end 值
+		var range = [...Array(days)].map((_, i) => i + 1);
 
 		for (var i = 0, l = firstDay; i < l; i++) {
 			range.unshift(undefined);
 		}
 
-		var chunks = _chunk(range, 7); // 分割成长度为 7 的数组段
+		var chunks = []; // 分割成长度为 7 的数组段
+
+		while (range.length > 0) {
+			chunks.push(range.splice(0, 7))
+		}
 
 		var weekDays = [];
 		for (var j = 0, len = chunks.length; j < len; j++) {
@@ -44,7 +46,7 @@ export default React.createClass({
 					chunks[j].push(undefined);
 				}
 			}
-			weekDays.push(<Week key={j} highlight={this.props.highlight} days={chunks[j]} selectDay={this.selectDay} day={this.props.day}/>);
+			weekDays.push(<Week key={j} highlight={this.props.highlight} days={chunks[j]} selectDay={this.selectDay} day={Number(this.props.day)}/>);
 		}
 		var weekTitle;
 		if (this.props.locale === 'zh') {
