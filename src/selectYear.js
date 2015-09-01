@@ -16,7 +16,7 @@ export default React.createClass({
       };
     },
     handleChange: function(e:any) {
-        this.props.selectYear(e.currentTarget.value);
+        this.props.selectYear(Number(e.currentTarget.value));
     },
     render: function():any {
 				var start = typeof this.props.range === 'undefined' ? 1984 : this.props.range[0];

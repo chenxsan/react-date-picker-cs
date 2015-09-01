@@ -16,7 +16,7 @@ export default React.createClass({
         };
     },
     handleChange: function(e:any) {
-      this.props.selectMonth(e.currentTarget.value);
+      this.props.selectMonth(Number(e.currentTarget.value));
     },
     render: function():any {
 		var months;
