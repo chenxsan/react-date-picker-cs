@@ -29,10 +29,12 @@ export default React.createClass({
         };
     },
     prevMonth: function () {
+			  var minYear = this.props.range[0];
+				var maxYear = this.props.range[1];
         if (this.state.month === 1) {
             this.setState({
                 month: 12,
-                year: this.state.year - 1
+                year: (this.state.year === minYear ? maxYear : this.state.year - 1)
             });
         } else {
 					this.setState({
@@ -41,10 +43,12 @@ export default React.createClass({
 				}
     },
     nextMonth: function () {
+			  var minYear = this.props.range[0];
+				var maxYear = this.props.range[1];
         if (this.state.month === 12) {
             this.setState({
                 month: 1,
-                year: this.state.year + 1
+                year: (this.state.year === maxYear ? minYear : this.state.year + 1)
             });
         } else {
 					this.setState({
@@ -83,11 +87,11 @@ export default React.createClass({
         return (<div className="datePicker__calendar">
             <div className="datePicker__calendar__header">
                 <span onClick={this.prevMonth} className="datePicker__prev"></span>
-                <SelectYear year={this.state.year} selectYear={this.selectYear} range={this.props.range}/>
+                <SelectYear year={Number(this.state.year)} selectYear={this.selectYear} range={this.props.range}/>
                 <SelectMonth month={Number(this.state.month)} selectMonth={this.selectMonth} locale={this.props.locale}/>
                 <span onClick={this.nextMonth} className="datePicker__next"></span>
             </div>
-            <WeekDays locale={this.props.locale} highlight={new Date(this.props.date).getFullYear() === this.state.year && new Date(this.props.date).getMonth() + 1 === this.state.month} year={this.state.year} month={Number(this.state.month)} day={Number(this.state.day)} selectDay={this.selectDay}/>
+            <WeekDays locale={this.props.locale} highlight={new Date(this.props.date).getFullYear() === this.state.year && new Date(this.props.date).getMonth() + 1 === this.state.month} year={Number(this.state.year)} month={Number(this.state.month)} day={Number(this.state.day)} selectDay={this.selectDay}/>
             <div className="datePicker__btnGroup"><button className="datePicker__btn datePicker__btn--today" onClick={this.props.selectToday}>{this.props.locale === 'zh' ? '今天' : 'Today'}</button></div>
         </div>);
     }
