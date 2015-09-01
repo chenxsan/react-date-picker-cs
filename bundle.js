@@ -54,10 +54,12 @@ exports['default'] = _react2['default'].createClass({
         };
     },
     prevMonth: function prevMonth() {
+        var minYear = this.props.range[0];
+        var maxYear = this.props.range[1];
         if (this.state.month === 1) {
             this.setState({
                 month: 12,
-                year: this.state.year - 1
+                year: this.state.year === minYear ? maxYear : this.state.year - 1
             });
         } else {
             this.setState({
@@ -66,10 +68,12 @@ exports['default'] = _react2['default'].createClass({
         }
     },
     nextMonth: function nextMonth() {
+        var minYear = this.props.range[0];
+        var maxYear = this.props.range[1];
         if (this.state.month === 12) {
             this.setState({
                 month: 1,
-                year: this.state.year + 1
+                year: this.state.year === maxYear ? minYear : this.state.year + 1
             });
         } else {
             this.setState({
@@ -112,11 +116,11 @@ exports['default'] = _react2['default'].createClass({
                 'div',
                 { className: "datePicker__calendar__header" },
                 _react2['default'].createElement('span', { onClick: this.prevMonth, className: "datePicker__prev" }),
-                _react2['default'].createElement(_selectYear2['default'], { year: this.state.year, selectYear: this.selectYear, range: this.props.range }),
-                _react2['default'].createElement(_selectMonth2['default'], { month: this.state.month, selectMonth: this.selectMonth, locale: this.props.locale }),
+                _react2['default'].createElement(_selectYear2['default'], { year: Number(this.state.year), selectYear: this.selectYear, range: this.props.range }),
+                _react2['default'].createElement(_selectMonth2['default'], { month: Number(this.state.month), selectMonth: this.selectMonth, locale: this.props.locale }),
                 _react2['default'].createElement('span', { onClick: this.nextMonth, className: "datePicker__next" })
             ),
-            _react2['default'].createElement(_weekDays2['default'], { locale: this.props.locale, highlight: new Date(this.props.date).getFullYear() === this.state.year && new Date(this.props.date).getMonth() + 1 === this.state.month, year: this.state.year, month: this.state.month, day: Number(this.state.day), selectDay: this.selectDay }),
+            _react2['default'].createElement(_weekDays2['default'], { locale: this.props.locale, highlight: new Date(this.props.date).getFullYear() === this.state.year && new Date(this.props.date).getMonth() + 1 === this.state.month, year: Number(this.state.year), month: Number(this.state.month), day: Number(this.state.day), selectDay: this.selectDay }),
             _react2['default'].createElement(
                 'div',
                 { className: "datePicker__btnGroup" },
@@ -182,7 +186,7 @@ exports['default'] = _react2['default'].createClass({
         };
     },
     handleChange: function handleChange(e) {
-        this.props.selectMonth(e.currentTarget.value);
+        this.props.selectMonth(Number(e.currentTarget.value));
     },
     render: function render() {
         var months;
@@ -238,7 +242,7 @@ exports['default'] = _react2['default'].createClass({
         };
     },
     handleChange: function handleChange(e) {
-        this.props.selectYear(e.currentTarget.value);
+        this.props.selectYear(Number(e.currentTarget.value));
     },
     render: function render() {
         var start = typeof this.props.range === 'undefined' ? 1984 : this.props.range[0];
